@@ -9,7 +9,7 @@ the stills should show. A code style: VT323 headlines and JetBrains Mono text in
 |---|---|---|---|---|---|
 | display | VT323 Regular | caps | 0.02 em | headlines, quotes, word-pop | keeps its size ×1.3, shrinks to fit; line pitch 1.12 cap heights |
 | accent | JetBrains Mono Regular | as written | -0.01 em | lead-ins |  |
-| body | JetBrains Mono Regular | as written | -0.01 em | running text, captions | 34 characters a line; line pitch 2.6 x-heights |
+| body | JetBrains Mono Regular | as written | -0.01 em | running text, captions in JetBrains Mono Bold | 34 characters a line; line pitch 2.6 x-heights |
 | label | JetBrains Mono Bold | caps | 0.1 em | eyebrows, counters, fact labels |  |
 | code | JetBrains Mono Regular | as written | 0 em | code |  |
 

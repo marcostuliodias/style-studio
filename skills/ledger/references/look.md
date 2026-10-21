@@ -9,7 +9,7 @@ the stills should show. A quiet editorial style: EB Garamond headlines set left 
 |---|---|---|---|---|---|
 | display | EB Garamond Bold | as written | -0.01 em | headlines, quotes, the caption key word | fills 82% of the measure; line pitch 1.45 cap heights |
 | accent | EB Garamond Regular | as written | 0 em | lead-ins |  |
-| body | Newsreader Regular | as written | 0 em | running text, captions | 46 characters a line; line pitch 3.1 x-heights |
+| body | Newsreader Regular | as written | 0 em | running text, captions in Newsreader Medium | 46 characters a line; line pitch 3.1 x-heights |
 | label | JetBrains Mono Regular | caps | 0.12 em | eyebrows, counters, fact labels |  |
 | code | JetBrains Mono Regular | as written | 0 em | code |  |
 

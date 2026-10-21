@@ -9,7 +9,7 @@ the stills should show. A neo-brutalist sticker style: Archivo Black headlines a
 |---|---|---|---|---|---|
 | display | Archivo Black Regular | as written | -0.025 em | headlines, quotes, word-pop, the caption key word | keeps its size ×1.05, shrinks to fit; line pitch 1.14 cap heights |
 | accent | Space Grotesk Bold | as written | -0.01 em | lead-ins |  |
-| body | Space Grotesk Regular | as written | -0.01 em | running text, captions | 36 characters a line; line pitch 2.7 x-heights |
+| body | Space Grotesk Regular | as written | -0.01 em | running text, captions in Space Grotesk Bold | 36 characters a line; line pitch 2.7 x-heights |
 | label | Space Grotesk Bold | caps | 0.08 em | eyebrows, counters, fact labels |  |
 | code | JetBrains Mono Regular | as written | 0 em | code |  |
 

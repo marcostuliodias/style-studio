@@ -9,7 +9,7 @@ the stills should show. A loud creator style: Anton caps centred over flat black
 |---|---|---|---|---|---|
 | display | Anton Regular | caps | 0.01 em | headlines, quotes, word-pop | keeps its size ×1.35, shrinks to fit; line pitch 1.1 cap heights |
 | accent | Inter SemiBold Italic | as written | -0.01 em | lead-ins |  |
-| body | Inter Medium | as written | -0.01 em | running text, captions | 38 characters a line; line pitch 2.6 x-heights |
+| body | Inter Medium | as written | -0.01 em | running text, captions in Inter Black | 38 characters a line; line pitch 2.6 x-heights |
 | label | Inter Bold | caps | 0.02 em | eyebrows, counters, fact labels |  |
 | code | JetBrains Mono Regular | as written | 0 em | code |  |
 

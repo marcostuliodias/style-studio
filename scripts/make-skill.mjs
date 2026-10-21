@@ -903,8 +903,11 @@ const lookMd = (pack) => {
   const PR = pack.presenter;
   const voices = { display: 'headlines, quotes', accent: 'lead-ins', body: 'running text', label: 'eyebrows, counters, fact labels', code: 'code' };
   if (pack.scenes.brings.includes('word-pop')) voices.display += ', word-pop';
-  voices[S.voice] += ', captions';
-  if (S.key.voice !== S.voice) voices[S.key.voice] += ', the caption key word';
+  // captions and their key word take a voice's family at a weight of their own (src/kit/Subtitle.tsx), so where that
+  // isn't the voice's face, the row names the face they're drawn in
+  const drawnIn = (v, weight, style = 'normal') => (weight === T[v].weight && style === (T[v].style ?? 'normal') ? '' : ` in ${face(T[v].family, weight, style)}`);
+  voices[S.voice] += `, captions${drawnIn(S.voice, S.weight)}`;
+  if (S.key.voice !== S.voice) voices[S.key.voice] += `, the caption key word${drawnIn(S.key.voice, S.key.weight, S.key.style)}`;
   const layoutRule = (v) => {
     const L = T[v].layout;
     const bits = [];

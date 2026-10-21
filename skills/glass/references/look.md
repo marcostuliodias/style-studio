@@ -9,7 +9,7 @@ the stills should show. A premium gradient style: Sora headlines and Inter text 
 |---|---|---|---|---|---|
 | display | Sora Bold | as written | -0.035 em | headlines, quotes | keeps its size ×1, shrinks to fit; line pitch 1.2 cap heights |
 | accent | Sora Regular | as written | -0.01 em | lead-ins |  |
-| body | Inter Medium | as written | -0.01 em | running text, captions | 38 characters a line; line pitch 2.7 x-heights |
+| body | Inter Medium | as written | -0.01 em | running text, captions in Inter Bold | 38 characters a line; line pitch 2.7 x-heights |
 | label | Inter Bold | caps | 0.16 em | eyebrows, counters, fact labels |  |
 | code | JetBrains Mono Regular | as written | 0 em | code |  |
 
