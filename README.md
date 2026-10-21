@@ -31,7 +31,9 @@ packs bring, so Ledger refuses to render it.*
 - [ffmpeg](https://ffmpeg.org) and ffprobe on your PATH
 - [Claude Code](https://www.anthropic.com/claude-code)
 - A talking-head video, already cut: takes chosen, dead air out, one continuous file
-- Word timings for it: an SRT, VTT or JSON with a time for each word, or a local Whisper run with word timestamps
+- Word timings for it, a time for each word. If you don't have them, Claude can make them with
+  [Whisper](https://github.com/openai/whisper): `pip install -U openai-whisper`, then, in the video's folder,
+  `whisper plate.mp4 --model small --word_timestamps True --output_format json` writes `plate.json` beside it
 
 ## Set up
 
@@ -55,14 +57,18 @@ The first render downloads the headless Chrome that Remotion renders with.
    [Style Studio](https://videoeditskill.synteq.app) and click **Download skill**, then unzip the download in this
    folder (the one with `package.json`). It adds `skills/<your-style>/` and `src/packs/<your-style>.json`, and the
    engine finds it there by name: there's nothing else to set up.
-2. **Add your video.** Put the cut video in `public/footage/<video>/`, for example
+2. **Add your video.** Put the cut video in a folder of its own as `plate.mp4`, for example
    `public/footage/my-first-reel/plate.mp4`, with its word timings beside it. Footage and plans stay out of git.
 3. **Ask Claude Code.** Open Claude Code in this folder and ask it to edit the video in your style, for example:
-   *"Edit public/footage/my-first-reel/plate.mp4 in My Volt. The word timings are in words.srt next to it."*
+   *"Edit public/footage/my-first-reel/plate.mp4 in My Volt. The word timings are in plate.json next to it."*
 
 Claude reads the style's skill, lays out the shots, checks the plan (`scripts/check-plan.mjs`), renders a still per
 shot to review, and then renders the video to `out/reels/<video>.mp4`. The reel is 1080x1920 at 30 fps; your video can
 be landscape or vertical.
+
+The board (`npm run studio`) and each skill's `example-plan.json` play demo footage that isn't included: to look
+at them, put any landscape talking-head clip at `public/footage/demo/plate.mp4` and set its face in
+`src/board/demo-shoot.json`. Your own edits don't need it.
 
 ## How it fits together
 
