@@ -1,0 +1,7 @@
+node_modules/
+out/
+# footage and cutouts are per creator and never go in the repo
+public/footage/
+# reel plans are per creator and per video, like the footage
+plans/
+.env

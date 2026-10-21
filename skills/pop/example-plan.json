@@ -1,0 +1,278 @@
+{
+  "pack": "pop",
+  "hero": "win",
+  "title": "Pop example",
+  "shoot": {
+    "plate": "footage/demo/plate.mp4",
+    "width": 1920,
+    "height": 1080,
+    "faceX": 910,
+    "crown": 235,
+    "eyes": 425,
+    "chin": 650,
+    "tone": {
+      "chest": 0.011
+    }
+  },
+  "from": 790,
+  "captions": [
+    {
+      "from": 0,
+      "to": 28,
+      "text": "Claude Code just"
+    },
+    {
+      "from": 28,
+      "to": 55,
+      "text": "got *five* mods"
+    },
+    {
+      "from": 55,
+      "to": 74,
+      "text": "you should"
+    },
+    {
+      "from": 74,
+      "to": 92,
+      "text": "install now"
+    },
+    {
+      "from": 147,
+      "to": 175,
+      "text": "Token Ledger shows"
+    },
+    {
+      "from": 175,
+      "to": 202,
+      "text": "what every turn"
+    },
+    {
+      "from": 202,
+      "to": 230,
+      "text": "costs you, *live*"
+    },
+    {
+      "from": 230,
+      "to": 258,
+      "text": "my bill went"
+    },
+    {
+      "from": 258,
+      "to": 286,
+      "text": "from two hundred"
+    },
+    {
+      "from": 286,
+      "to": 313,
+      "text": "and forty dollars"
+    },
+    {
+      "from": 313,
+      "to": 332,
+      "text": "to *nothing*"
+    },
+    {
+      "from": 332,
+      "to": 360,
+      "text": "and the people"
+    },
+    {
+      "from": 360,
+      "to": 387,
+      "text": "using it say"
+    },
+    {
+      "from": 387,
+      "to": 415,
+      "text": "the *same* thing"
+    },
+    {
+      "from": 498,
+      "to": 526,
+      "text": "follow for the"
+    },
+    {
+      "from": 526,
+      "to": 544,
+      "text": "other *four*"
+    }
+  ],
+  "shots": [
+    {
+      "scene": "sticker",
+      "frames": 92,
+      "beat": "hook",
+      "note": "The hook",
+      "props": {
+        "stickers": [
+          {
+            "text": "Claude Code",
+            "at": 2,
+            "icon": "code"
+          },
+          {
+            "text": "5",
+            "at": 37,
+            "kind": "burst"
+          },
+          {
+            "text": "new mods",
+            "at": 46
+          }
+        ]
+      }
+    },
+    {
+      "scene": "word-pop",
+      "frames": 76,
+      "beat": "payoff",
+      "note": "The hook's payoff",
+      "props": {
+        "groups": [
+          {
+            "from": 0,
+            "to": 18,
+            "words": [
+              {
+                "text": "and",
+                "at": 0
+              },
+              {
+                "text": "this",
+                "at": 9
+              }
+            ]
+          },
+          {
+            "from": 18,
+            "to": 37,
+            "words": [
+              {
+                "text": "one",
+                "at": 18
+              },
+              {
+                "text": "is",
+                "at": 28
+              }
+            ]
+          },
+          {
+            "from": 37,
+            "to": 46,
+            "words": [
+              {
+                "text": "basically",
+                "at": 37
+              }
+            ]
+          },
+          {
+            "from": 46,
+            "to": 76,
+            "words": [
+              {
+                "text": "cheating",
+                "at": 46,
+                "key": true
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "scene": "list",
+      "frames": 62,
+      "in": "whip",
+      "beat": "item",
+      "note": "List item 1",
+      "props": {
+        "index": 1,
+        "of": 5,
+        "kind": "Mod",
+        "name": "Token Ledger",
+        "line": "Every turn's cost, live, in the status line.",
+        "facts": [
+          {
+            "k": "Context used",
+            "v": "41%"
+          },
+          {
+            "k": "Tokens saved",
+            "v": "128k",
+            "win": true
+          },
+          {
+            "k": "Turns",
+            "v": "17"
+          }
+        ],
+        "icon": "gauge"
+      }
+    },
+    {
+      "scene": "sticker",
+      "frames": 123,
+      "in": "flash",
+      "beat": "number",
+      "note": "The number",
+      "props": {
+        "stickers": [
+          {
+            "text": "$240",
+            "at": 37,
+            "strike": true,
+            "icon": "coin"
+          },
+          {
+            "text": "$0",
+            "at": 93,
+            "kind": "burst"
+          }
+        ]
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 62,
+      "beat": "point",
+      "note": "Bridge to the proof",
+      "props": {
+        "layout": "full",
+        "punches": [
+          7,
+          34
+        ]
+      }
+    },
+    {
+      "scene": "quote",
+      "frames": 83,
+      "in": "whip",
+      "beat": "proof",
+      "note": "The proof, in someone else's words",
+      "props": {
+        "lines": [
+          "Invoicing took my",
+          "whole Friday. Now",
+          "it runs overnight."
+        ],
+        "name": "Client name",
+        "role": "Founder · Their company"
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 69,
+      "beat": "end",
+      "note": "The end",
+      "props": {
+        "layout": "full",
+        "punches": [
+          28
+        ]
+      }
+    }
+  ]
+}

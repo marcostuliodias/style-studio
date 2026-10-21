@@ -1,0 +1,229 @@
+{
+  "pack": "sketch",
+  "hero": "win",
+  "title": "Sketch example",
+  "shoot": {
+    "plate": "footage/demo/plate.mp4",
+    "width": 1920,
+    "height": 1080,
+    "faceX": 910,
+    "crown": 235,
+    "eyes": 425,
+    "chin": 650,
+    "tone": {
+      "chest": 0.011
+    }
+  },
+  "from": 790,
+  "captions": [
+    {
+      "from": 0,
+      "to": 41,
+      "text": "Claude Code just got"
+    },
+    {
+      "from": 41,
+      "to": 72,
+      "text": "*five* mods you"
+    },
+    {
+      "from": 72,
+      "to": 103,
+      "text": "should install now"
+    },
+    {
+      "from": 103,
+      "to": 134,
+      "text": "and this one"
+    },
+    {
+      "from": 134,
+      "to": 165,
+      "text": "is basically *cheating*"
+    },
+    {
+      "from": 165,
+      "to": 196,
+      "text": "Token Ledger shows"
+    },
+    {
+      "from": 196,
+      "to": 227,
+      "text": "what every turn"
+    },
+    {
+      "from": 227,
+      "to": 258,
+      "text": "costs you, *live*"
+    },
+    {
+      "from": 258,
+      "to": 299,
+      "text": "my bill went from"
+    },
+    {
+      "from": 299,
+      "to": 340,
+      "text": "two hundred and forty"
+    },
+    {
+      "from": 340,
+      "to": 371,
+      "text": "dollars to *nothing*"
+    },
+    {
+      "from": 371,
+      "to": 402,
+      "text": "and the people"
+    },
+    {
+      "from": 402,
+      "to": 433,
+      "text": "using it say"
+    },
+    {
+      "from": 433,
+      "to": 464,
+      "text": "the *same* thing"
+    },
+    {
+      "from": 557,
+      "to": 588,
+      "text": "follow for the"
+    },
+    {
+      "from": 588,
+      "to": 608,
+      "text": "other *four*"
+    }
+  ],
+  "shots": [
+    {
+      "scene": "title",
+      "frames": 103,
+      "beat": "hook",
+      "note": "The hook",
+      "props": {
+        "lead": "Claude Code just got",
+        "lines": [
+          [
+            {
+              "t": "Mods"
+            }
+          ],
+          [
+            {
+              "t": "5",
+              "hero": true
+            },
+            {
+              "t": "to install now"
+            }
+          ]
+        ],
+        "sizes": [
+          260,
+          110
+        ]
+      }
+    },
+    {
+      "scene": "doodle",
+      "frames": 82,
+      "beat": "payoff",
+      "note": "The hook's payoff",
+      "props": {
+        "note": "*unfair* advantage",
+        "from": 41
+      }
+    },
+    {
+      "scene": "list",
+      "frames": 73,
+      "in": "wipe",
+      "beat": "item",
+      "note": "List item 1",
+      "props": {
+        "index": 1,
+        "of": 5,
+        "kind": "Mod",
+        "name": "Token Ledger",
+        "line": "Every turn's cost, live, in the status line.",
+        "facts": [
+          {
+            "k": "Context used",
+            "v": "41%"
+          },
+          {
+            "k": "Tokens saved",
+            "v": "128k",
+            "win": true
+          },
+          {
+            "k": "Turns",
+            "v": "17"
+          }
+        ],
+        "icon": "gauge"
+      }
+    },
+    {
+      "scene": "stat",
+      "frames": 113,
+      "beat": "number",
+      "note": "The number",
+      "props": {
+        "lead": "What it costs you",
+        "title": "Per month",
+        "text": "Same tools and the same team. The bill went from a line on every invoice to nothing at all.",
+        "before": {
+          "k": "Before",
+          "v": "$240"
+        },
+        "after": {
+          "k": "After",
+          "v": "$0"
+        },
+        "icon": "coin"
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 93,
+      "beat": "point",
+      "note": "Bridge to the proof",
+      "props": {
+        "layout": "full",
+        "punches": [
+          72
+        ]
+      }
+    },
+    {
+      "scene": "quote",
+      "frames": 93,
+      "in": "wipe",
+      "beat": "proof",
+      "note": "The proof, in someone else's words",
+      "props": {
+        "lines": [
+          "Invoicing took my",
+          "whole Friday. Now",
+          "it runs overnight."
+        ],
+        "name": "Client name",
+        "role": "Founder · Their company"
+      }
+    },
+    {
+      "scene": "doodle",
+      "frames": 81,
+      "beat": "end",
+      "note": "The end",
+      "props": {
+        "note": "*4* more to go",
+        "from": 31
+      }
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "pack": "glass",
+  "hero": "win",
+  "title": "Glass example",
+  "shoot": {
+    "plate": "footage/demo/plate.mp4",
+    "width": 1920,
+    "height": 1080,
+    "faceX": 910,
+    "crown": 235,
+    "eyes": 425,
+    "chin": 650,
+    "tone": {
+      "chest": 0.011
+    }
+  },
+  "from": 790,
+  "captions": [
+    {
+      "from": 0,
+      "to": 55,
+      "text": "Claude Code just got *five*"
+    },
+    {
+      "from": 55,
+      "to": 109,
+      "text": "mods you should install now"
+    },
+    {
+      "from": 109,
+      "to": 142,
+      "text": "and this one"
+    },
+    {
+      "from": 142,
+      "to": 174,
+      "text": "is basically *cheating*"
+    },
+    {
+      "from": 174,
+      "to": 228,
+      "text": "Token Ledger shows what every"
+    },
+    {
+      "from": 228,
+      "to": 272,
+      "text": "turn costs you, *live*"
+    },
+    {
+      "from": 272,
+      "to": 316,
+      "text": "my bill went from"
+    },
+    {
+      "from": 316,
+      "to": 359,
+      "text": "two hundred and forty"
+    },
+    {
+      "from": 359,
+      "to": 392,
+      "text": "dollars to *nothing*"
+    },
+    {
+      "from": 392,
+      "to": 446,
+      "text": "and the people using it"
+    },
+    {
+      "from": 446,
+      "to": 490,
+      "text": "say the *same* thing"
+    },
+    {
+      "from": 588,
+      "to": 643,
+      "text": "follow for the other *four*"
+    }
+  ],
+  "shots": [
+    {
+      "scene": "title",
+      "frames": 109,
+      "beat": "hook",
+      "note": "The hook",
+      "props": {
+        "lead": "Claude Code just got",
+        "lines": [
+          [
+            {
+              "t": "Mods"
+            }
+          ],
+          [
+            {
+              "t": "5",
+              "hero": true
+            },
+            {
+              "t": "to install now"
+            }
+          ]
+        ],
+        "sizes": [
+          260,
+          110
+        ]
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 65,
+      "beat": "payoff",
+      "note": "The hook's payoff",
+      "props": {
+        "layout": "full",
+        "punches": [
+          54
+        ]
+      }
+    },
+    {
+      "scene": "float",
+      "frames": 98,
+      "beat": "item",
+      "note": "List item 1",
+      "props": {
+        "lead": "Mod 1 of 5",
+        "title": "Token Ledger",
+        "facts": [
+          {
+            "k": "Context used",
+            "v": "41%"
+          },
+          {
+            "k": "Tokens saved",
+            "v": "128k",
+            "win": true
+          }
+        ],
+        "icon": "gauge"
+      }
+    },
+    {
+      "scene": "stat",
+      "frames": 120,
+      "in": "blur",
+      "beat": "number",
+      "note": "The number",
+      "props": {
+        "lead": "What it costs you",
+        "title": "Per month",
+        "text": "Same tools and the same team. The bill went from a line on every invoice to nothing at all.",
+        "before": {
+          "k": "Before",
+          "v": "$240"
+        },
+        "after": {
+          "k": "After",
+          "v": "$0"
+        },
+        "icon": "coin"
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 98,
+      "beat": "point",
+      "note": "Bridge to the proof",
+      "props": {
+        "layout": "halfBand",
+        "head": "Same verdict"
+      }
+    },
+    {
+      "scene": "quote",
+      "frames": 98,
+      "in": "blur",
+      "beat": "proof",
+      "note": "The proof, in someone else's words",
+      "props": {
+        "lines": [
+          "Invoicing took my",
+          "whole Friday. Now",
+          "it runs overnight."
+        ],
+        "name": "Client name",
+        "role": "Founder · Their company"
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 93,
+      "beat": "end",
+      "note": "The end",
+      "props": {
+        "layout": "full",
+        "punches": [
+          44
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "style-studio-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "One Remotion engine, many editing styles: a style pack (fonts, palette, grounds, captions, layout rules, motion, the scene types it brings) drives every scene.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kelano86/style-studio-engine.git"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "studio": "remotion studio src/board/entry.tsx --port 3480",
+    "typecheck": "tsc --noEmit",
+    "stills": "node scripts/render-stills.mjs",
+    "reel": "node scripts/render-reel.mjs",
+    "check": "node scripts/check-plan.mjs",
+    "skill": "node scripts/make-skill.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.530",
+    "@remotion/cli": "4.0.530",
+    "@remotion/fonts": "4.0.530",
+    "@remotion/renderer": "4.0.530",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.530"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "5.8.2"
+  }
+}
