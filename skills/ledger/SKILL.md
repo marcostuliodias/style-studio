@@ -21,10 +21,17 @@ Run every command from the engine's root folder (the one with `package.json` and
 
 ## What you need
 
-- **The edit**: the talking-head video, already cut (takes chosen, dead air out), as one continuous file in
-  `public/footage/<video>/`. The reel is 1080x1920 at 30 fps; the edit can be landscape.
-- **Word timings**: the transcript with a time for each word (an SRT, VTT or JSON from the creator, or a local Whisper
-  run with word timestamps). Captions and punch-ins are all placed on them.
+- **The video**: the talking-head recording, wherever the creator has it (Downloads, the desktop, a phone export),
+  raw is fine. `node scripts/importar.mjs <file> --nome <video>` brings it in as
+  `public/footage/<video>/original.mp4` (H.264, 30 fps), and `node scripts/limpar.mjs public/footage/<video>/original.mp4`
+  makes the cut the engine edits, `plate.mp4`: it transcribes the raw video with a time for every word (once), takes out
+  the silences and long pauses, the stutters, the retakes (a phrase started over: the first try goes) and the dead air
+  at both ends, and writes the word timings already on the cut to `plate.json` and what it took out to
+  `cortes.json`. Read its report and tell the creator in a line what went (they see and can keep any of it on the
+  storyboard). A video the creator has already cut goes through the same two commands: the clean-up then finds little.
+- **Word timings**: `public/footage/<video>/plate.json` from the clean-up (segments with `words[]`, `start` and
+  `end` in seconds of `plate.mp4`). Captions and punch-ins are all placed on them. Never
+  on the raw video's timings (`original.json`): those are before the cuts.
 - **The face, measured** in the edit's own pixels. Pull a frame with a grid on it, a line every 100 px
   (`ffmpeg -ss 5 -i public/footage/<video>/plate.mp4 -frames:v 1 -vf "drawgrid=w=100:h=100:t=2:c=red@0.6" out/face.png`),
   look at it, and read off the face's centre x, the top of the head (crown), the eye line and the chin by counting
@@ -89,9 +96,10 @@ Run every command from the engine's root folder (the one with `package.json` and
    - It has already written the chosen options into the plan (the plan as it was: `plans/<video>.antes.json`) and
      the "always" notes into `plans/regras.json`; everything the creator said is in `plans/<video>.storyboard.json`
      and in the command's output.
-   - **Cuts** (`cortes`, in seconds of the edit in `public/footage`, not the reel): remove those ranges from the
-     edit with ffmpeg (keep the original beside it), make the word timings again, shift `from`, the captions and the
-     shots, and run the storyboard again so the creator sees the cut.
+   - **Kept and cut** (`manter`: cuts of the clean-up the creator wants back; `cortes`: ranges they marked, in
+     seconds of `plate.mp4`): run the `limpar.mjs` command the storyboard prints (it adds `--manter` and
+     `--cortar`, starting over from the original). `plate.mp4` and `plate.json` change length: redo `from`,
+     the captions and the shots from the new `plate.json`, check, and run the storyboard again so the creator sees it.
    - **Adjustments** (`ajustes`): change the plan accordingly, check it, render the stills again. A note marked always
      is now a rule: follow it in this plan too.
    - Exit code 0 is approved: apply any adjustments and render. Exit code 2 is changes asked: fix the plan and run the

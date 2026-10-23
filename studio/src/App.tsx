@@ -540,7 +540,7 @@ const SkillView: React.FC<{ pack: StylePack; json: string; skill: SkillState; on
             <span className="muted small">Sem o Claude: dois cliques em <code>INSTALAR-MAC.command</code> ou <code>INSTALAR.bat</code>. Tudo está no <code>LEIA-PRIMEIRO.md</code> dentro do zip.</span>
           </li>
           <li>
-            <span><strong>Edite.</strong> Feche e abra o Claude de novo na pasta <code>style-studio</code>, coloque o vídeo cortado em <code>public/footage/&lt;nome&gt;/plate.mp4</code> e peça para editar em {pack.name}. Quer outro estilo? Baixe o zip novo e repita a mensagem: ele só adiciona.</span>
+            <span><strong>Edite.</strong> Feche e abra o Claude de novo na pasta <code>style-studio</code>, diga onde está o vídeo (pode ser bruto: o Claude traz, transcreve e tira pausas, gaguejos e frases refeitas) e peça para editar em {pack.name}. Antes de renderizar, ele abre o storyboard para você aprovar. Quer outro estilo? Baixe o zip novo e repita a mensagem: ele só adiciona.</span>
           </li>
         </ol>
       </div>

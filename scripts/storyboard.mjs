@@ -88,6 +88,14 @@ const heroHex = () => {
   return /^#/.test(h) ? h : pack.palette[h] ?? pack.palette.extended?.[h] ?? pack.palette.win;
 };
 const rules = () => (fs.existsSync(rulesFile) ? JSON.parse(fs.readFileSync(rulesFile, 'utf8')) : { regras: [] });
+// the clean-up's record, beside the plate (scripts/limpar.mjs): what was cut from the raw edit, for the creator to keep
+const footageDir = plan.shoot?.plate ? path.join(ROOT, 'public', path.dirname(plan.shoot.plate)) : null;
+const cortesFile = footageDir ? path.join(footageDir, 'cortes.json') : null;
+const limpeza = () => {
+  if (!cortesFile || !fs.existsSync(cortesFile)) return null;
+  const c = JSON.parse(fs.readFileSync(cortesFile, 'utf8'));
+  return { aplicados: c.aplicados ?? [], mantidos: c.mantidos ?? [], duracaoOriginal: c.duracaoOriginal, duracaoFinal: c.duracaoFinal, original: fs.existsSync(path.join(footageDir, c.original)) ? `/original${path.extname(c.original)}` : null, originalFile: c.original };
+};
 const dados = () => ({
   nome: name,
   titulo: plan.title ?? name,
@@ -100,6 +108,7 @@ const dados = () => ({
   audio: plan.audio && plan.audio !== plan.shoot?.plate ? `/audio${path.extname(plan.audio)}` : null,
   captions: plan.captions ?? [],
   regras: rules().regras,
+  limpeza: limpeza(),
   shots: shots.map((s, i) => ({
     n: i + 1,
     scene: sceneName(s.scene),
@@ -140,6 +149,7 @@ const server = http.createServer(async (req, res) => {
   if (url.pathname === '/dados') { res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' }); return res.end(JSON.stringify(dados())); }
   if (url.pathname.startsWith('/stills/')) return sendFile(req, res, path.join(out, path.basename(url.pathname)));
   if (url.pathname.startsWith('/plate')) return sendFile(req, res, plan.shoot?.plate ? path.join(ROOT, 'public', plan.shoot.plate) : null);
+  if (url.pathname.startsWith('/original')) { const l = limpeza(); return sendFile(req, res, l ? path.join(footageDir, l.originalFile) : null); }
   if (url.pathname.startsWith('/audio')) return sendFile(req, res, plan.audio ? path.join(ROOT, 'public', plan.audio) : null);
   if (url.pathname === '/decidir' && req.method === 'POST') {
     try { decided = JSON.parse(await body(req)); } catch { res.writeHead(400); return res.end('json?'); }
@@ -169,6 +179,7 @@ function finish() {
   const ajustes = (d.ajustes ?? []).filter((a) => a.texto?.trim());
   const cortes = (d.cortes ?? []).sort((a, b) => a.from - b.from);
   const notas = (d.notas ?? '').trim();
+  const manter = (d.manter ?? []).map(Number).filter((x) => x > 0).sort((a, b) => a - b);
 
   // the chosen options go into the plan; the plan as it was is kept beside it
   if (escolhas.length) {
@@ -186,17 +197,25 @@ function finish() {
     fs.writeFileSync(rulesFile, JSON.stringify(r, null, 2) + '\n');
   }
 
-  const record = { status: d.status, em: when, escolhas: escolhas.map((e) => ({ plano: e.shot + 1, opcao: e.option + 1 })), ajustes: ajustes.map((a) => ({ plano: a.shot != null ? a.shot + 1 : null, texto: a.texto.trim(), sempre: !!a.sempre })), cortes, notas };
+  const record = { status: d.status, em: when, manter, escolhas: escolhas.map((e) => ({ plano: e.shot + 1, opcao: e.option + 1 })), ajustes: ajustes.map((a) => ({ plano: a.shot != null ? a.shot + 1 : null, texto: a.texto.trim(), sempre: !!a.sempre })), cortes, notas };
   fs.writeFileSync(path.join(path.dirname(planFile), `${name}.storyboard.json`), JSON.stringify(record, null, 2) + '\n');
 
   console.log('');
   console.log(d.status === 'aprovado' ? `APROVADO pelo criador (${when.slice(11, 16)}).` : `MUDANÇAS pedidas pelo criador (${when.slice(11, 16)}).`);
   if (escolhas.length) console.log(`Opções escolhidas e já aplicadas em ${path.relative(ROOT, planFile)}: ${escolhas.map((e) => `plano ${e.shot + 1} → opção ${e.option + 1} (${shots[e.shot].scene})`).join('; ')}.`);
   for (const a of ajustes) console.log(`- ${a.shot != null ? `Plano ${a.shot + 1} (${shots[a.shot].scene}, ${sec(at[a.shot])}): ` : ''}${a.texto.trim()}${a.sempre ? '  [SEMPRE: gravado em plans/regras.json]' : ''}`);
+  const l = limpeza();
+  for (const id of manter) { const c = l?.aplicados.find((x) => x.id === id); console.log(`- MANTER o trecho que a limpeza tirou #${id}${c ? ` (${c.tipo}: ${c.texto})` : ''}`); }
   for (const c of cortes) console.log(`- CORTAR do vídeo (${c.tipo}): ${c.from.toFixed(2)} s a ${c.to.toFixed(2)} s`);
   if (notas) console.log(`- Notas: ${notas}`);
-  if (cortes.length) console.log('Os cortes são tempos do vídeo em public/footage (não do reel): tire esses trechos com o ffmpeg, refaça os tempos das palavras e ajuste o plano.');
-  console.log(d.status === 'aprovado' ? (ajustes.length || cortes.length ? 'Aplique os ajustes e renderize o vídeo.' : 'Pode renderizar o vídeo.') : 'Ajuste o plano e rode o storyboard de novo.');
+  if (manter.length || cortes.length) {
+    const orig = l ? path.join(path.dirname(plan.shoot.plate), l.originalFile) : null;
+    const flags = [manter.length ? `--manter ${manter.join(',')}` : '', cortes.length ? `--cortar ${cortes.map((c) => `${c.from.toFixed(2)}-${c.to.toFixed(2)}`).join(',')}` : ''].filter(Boolean).join(' ');
+    console.log(orig
+      ? `Rode: node scripts/limpar.mjs public/${orig} ${flags}  (o plate.mp4 e o plate.json mudam de tempo: refaça from, as legendas e os planos a partir do plate.json novo, e abra o storyboard de novo)`
+      : 'Os cortes são tempos do vídeo em public/footage (não do reel): tire esses trechos com o ffmpeg, refaça os tempos das palavras e ajuste o plano.');
+  }
+  console.log(d.status === 'aprovado' ? (ajustes.length || cortes.length || manter.length ? 'Aplique os ajustes e renderize o vídeo.' : 'Pode renderizar o vídeo.') : 'Ajuste o plano e rode o storyboard de novo.');
   server.close();
   process.exit(d.status === 'aprovado' ? 0 : 2);
 }

@@ -10,12 +10,12 @@ in full and follow it; it says what you need from the creator, how to plan the s
 render the plan. If the style they name isn't in `skills/`, say so and list the ones that are, rather than editing in
 another style.
 
-Before the first step, check that `ffmpeg` and `ffprobe` run (the skill measures the footage with them), and ask the
-creator for whatever the skill's "What you need" lists that you don't have yet. The engine doesn't cut footage, so the
-video has to arrive cut. If they have no word timings, make them with `scripts/transcrever.py`: `<python> scripts/transcrever.py
-public/footage/<video>/plate.mp4` writes `plate.json` beside it (a time for every word), where `<python>` is the path in
-`.whisper-python` at this root (the installer's faster-whisper environment) or any Python with faster-whisper; without
-either, `pip install -U openai-whisper` and `whisper plate.mp4 --model small --word_timestamps True --output_format json`.
+Before the first step, check that `ffmpeg` and `ffprobe` run, and ask the creator for whatever the skill's "What you
+need" lists that you don't have yet. The video can be raw and anywhere on the disk: `node scripts/importar.mjs <file>
+--nome <video>` brings it in as `public/footage/<video>/original.mp4`, and `node scripts/limpar.mjs
+public/footage/<video>/original.mp4` transcribes it with a time for every word (faster-whisper, through the Python in
+`.whisper-python` at this root or any Python that has it), takes out silences, pauses, stutters and retakes, and writes
+the cut the engine edits, `plate.mp4`, with its word timings in `plate.json`. The engine itself never cuts footage.
 
 The creator's profile, `plans/perfil.json` (name, @, what they talk about, their photo and their prints with a line
 each), is made once with `node scripts/perfil.mjs` and read by every skill: the badge on the opening and the end, a
@@ -26,7 +26,7 @@ local page where the creator approves the plan, picks between the options a shot
 change. Wait for the creator there; never approve in their place. What they mark "always" lands in `plans/regras.json`,
 and every skill reads that file before planning.
 
-Run every command from this folder. The cut video goes in `public/footage/<video>/plate.mp4` (the skill's commands use
-that name) and plans in `plans/`; both stay out of git. Renders land in `out/`. The board (`npm run studio`, board
+Run every command from this folder. Footage lives in `public/footage/<video>/` (the raw `original.mp4`, the cut
+`plate.mp4`, their timings) and plans in `plans/`; both stay out of git. Renders land in `out/`. The board (`npm run studio`, board
 stills) and the skills' example plans play demo footage that isn't in this folder: any landscape talking-head clip at
 `public/footage/demo/plate.mp4`, its face measured in `src/board/demo-shoot.json`.

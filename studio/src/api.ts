@@ -121,9 +121,9 @@ Extraia o zip e dê dois cliques em INSTALAR-MAC.command (Mac) ou INSTALAR.bat (
 1. Feche o Claude por completo (Mac: Command+Q · Windows: ícone perto do relógio › Sair) e abra de novo.
 2. Na aba Code, escolha a pasta style-studio (fica na sua pasta de usuário).
 3. Na primeira vez, o Claude abre a página do seu perfil: nome, @, sobre o que você fala, sua foto e seus prints (mensagens de clientes, resultados). Isso vira o selo com sua foto e @ na abertura e no fim, e prints como prova nos vídeos.
-4. Coloque o vídeo cortado em public/footage/<nome>/plate.mp4 e peça: "Edite public/footage/<nome>/plate.mp4 em ${pack.name}. Se não houver marcações de tempo por palavra, faça com scripts/transcrever.py."
+4. Grave o vídeo (pode ser bruto, com erros e pausas) e peça: "Edite o vídeo /caminho/do/video.mov em ${pack.name}". O Claude traz o vídeo para a pasta, transcreve, tira silêncios, gaguejos e frases refeitas, e segue.
 5. O Claude lê skills/${pack.id}/SKILL.md, monta o plano, checa e abre o storyboard no seu navegador: você assiste o corte, escolhe entre as opções, marca erros de fala e diz o que mudar (só neste vídeo, ou sempre). O que você marca "sempre" vira regra para os próximos vídeos.
-6. Depois que você aprova, ele renderiza em out/reels/<nome>.mp4.
+6. Depois que você aprova, ele renderiza em out/reels/<nome>.mp4. Em cada storyboard você vê o que a limpeza tirou e pode devolver qualquer trecho.
 
 Quer outro estilo? Crie no Style Studio, baixe o zip novo e repita a mensagem de instalação: ele só adiciona o estilo.
 `;

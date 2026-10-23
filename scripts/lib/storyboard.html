@@ -34,6 +34,17 @@
   .corte input { width: 64px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 3px 5px; font-size: 13px; }
   .corte .k { color: var(--warn); font-weight: 600; min-width: 92px; }
   .corte .x { margin-left: auto; background: none; border: 0; color: var(--soft); cursor: pointer; font-size: 16px; }
+  .limpeza { margin-top: 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; }
+  .limpeza b { display: block; margin-bottom: 6px; }
+  .limpeza .l { display: flex; gap: 8px; align-items: center; padding: 5px 0; border-top: 1px solid var(--line); color: var(--soft); }
+  .limpeza .l .tp { color: var(--text); min-width: 68px; }
+  .limpeza .l .tx { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .limpeza .l button { padding: 3px 8px; font-size: 12px; }
+  .limpeza .l.keep { color: var(--text); }
+  .limpeza .l.keep .tp::before { content: "✓ fica · "; color: var(--ok); }
+  .ouvir { position: fixed; right: 20px; bottom: 90px; width: 360px; background: var(--panel); border: 1px solid var(--hero); border-radius: 12px; padding: 10px; z-index: 5; }
+  .ouvir video { width: 100%; border-radius: 8px; background: #000; }
+  .ouvirTxt { font-size: 13px; color: var(--soft); margin: 6px 0; }
   .regras { margin-top: 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--soft); }
   .regras ul { margin: 6px 0 0; padding-left: 18px; }
   .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
@@ -89,6 +100,8 @@
       <span class="time" id="tempo">0.0 s</span>
     </div>
     <div class="cortes" id="cortes"></div>
+    <div class="limpeza" id="limpeza"></div>
+    <div class="ouvir" id="ouvir" hidden><video id="orig" controls playsinline preload="metadata"></video><div class="ouvirTxt" id="ouvirTxt"></div><button class="b" id="ouvirX">fechar</button></div>
     <div class="regras" id="regras"></div>
   </section>
   <section>
@@ -115,7 +128,7 @@ const BEAT = { hook: 'gancho', payoff: 'entrega', item: 'item', number: 'número
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const sec = (f, D) => (f / D.fps).toFixed(1) + ' s';
-const state = { escolhas: {}, cortes: [], ajustes: {} };
+const state = { escolhas: {}, cortes: [], ajustes: {}, manter: new Set() };
 
 const D = await (await fetch('/dados')).json();
 document.documentElement.style.setProperty('--hero', D.hero);
@@ -180,6 +193,28 @@ function drawCortes() {
   summary();
 }
 
+// ── what the clean-up took out ──
+const L = D.limpeza;
+if (L && L.aplicados.length) {
+  const box = $('#limpeza');
+  const gone = (L.duracaoOriginal - L.duracaoFinal).toFixed(1);
+  const TIPO = { pausa: 'pausa', 'silêncio': 'silêncio', 'repetição': 'gaguejo', refeito: 'refeito', 'início': 'início', fim: 'fim', marcado: 'marcado' };
+  box.innerHTML = `<b>Limpeza automática: tirei ${L.aplicados.length} trecho${L.aplicados.length > 1 ? 's' : ''} (${gone} s) do vídeo bruto.</b><span style="color:var(--soft)">Se algum devia ficar, clique em "manter".</span>`;
+  const orig = $('#orig');
+  if (L.original) orig.src = L.original;
+  L.aplicados.forEach((c) => {
+    const el = document.createElement('div');
+    el.className = 'l';
+    el.innerHTML = `<span class="tp">${esc(TIPO[c.tipo] ?? c.tipo)}</span><span class="tx" title="${esc(c.texto)}">${c.from.toFixed(1)} s${c.texto ? ' · ' + esc(c.texto) : ''}</span>${L.original ? '<button class="b">ouvir</button>' : ''}${c.id != null ? '<button class="b k">manter</button>' : ''}`;
+    const ou = el.querySelector('button:not(.k)');
+    if (ou) ou.onclick = () => { $('#ouvir').hidden = false; $('#ouvirTxt').textContent = `${TIPO[c.tipo] ?? c.tipo}: ${c.texto || 'trecho sem fala'}`; orig.currentTime = Math.max(0, c.from - 0.6); orig.play(); const stop = () => { if (orig.currentTime >= c.to + 0.6) { orig.pause(); orig.removeEventListener('timeupdate', stop); } }; orig.addEventListener('timeupdate', stop); };
+    const k = el.querySelector('.k');
+    if (k) k.onclick = () => { if (state.manter.has(c.id)) { state.manter.delete(c.id); el.classList.remove('keep'); k.textContent = 'manter'; } else { state.manter.add(c.id); el.classList.add('keep'); k.textContent = 'tirar'; } summary(); };
+    box.appendChild(el);
+  });
+  $('#ouvirX').onclick = () => { orig.pause(); $('#ouvir').hidden = true; };
+}
+
 // ── rules already learned ──
 $('#regras').innerHTML = D.regras.length
   ? `<b>O que já sei sobre você</b> (${D.regras.length} regra${D.regras.length > 1 ? 's' : ''}):<ul>${D.regras.map((r) => `<li>${esc(r.texto)}</li>`).join('')}</ul>`
@@ -219,6 +254,7 @@ function summary() {
   if (n) parts.push(`${n} opç${n > 1 ? 'ões' : 'ão'} escolhida${n > 1 ? 's' : ''}`);
   if (a) parts.push(`${a} ajuste${a > 1 ? 's' : ''}`);
   if (state.cortes.length) parts.push(`${state.cortes.length} corte${state.cortes.length > 1 ? 's' : ''}`);
+  if (state.manter.size) parts.push(`${state.manter.size} trecho${state.manter.size > 1 ? 's' : ''} de volta`);
   $('#sum').textContent = parts.length ? parts.join(' · ') : 'Nada marcado ainda: se está tudo bom, é só aprovar.';
 }
 $('#notas').oninput = summary;
@@ -228,7 +264,7 @@ const send = async (status) => {
   if ($('#notas').value.trim()) ajustes.push({ shot: null, texto: $('#notas').value, sempre: $('#notasSempre').checked });
   const escolhas = Object.entries(state.escolhas).map(([k, v]) => ({ shot: +k, option: v }));
   $('#aprovar').disabled = $('#mudar').disabled = true;
-  await fetch('/decidir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status, escolhas, ajustes, cortes: state.cortes, notas: '' }) });
+  await fetch('/decidir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status, escolhas, ajustes, cortes: state.cortes, manter: [...state.manter], notas: '' }) });
   document.body.innerHTML = `<div class="done"><h1>${status === 'aprovado' ? 'Aprovado!' : 'Pedido enviado.'}</h1><p>${status === 'aprovado' ? 'O Claude vai renderizar o vídeo agora.' : 'O Claude vai ajustar o plano e abrir um storyboard novo.'} Pode fechar esta aba e voltar para a conversa.</p></div>`;
 };
 $('#aprovar').onclick = () => send('aprovado');
