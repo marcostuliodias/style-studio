@@ -6,3 +6,6 @@ public/footage/
 plans/
 .env
 dist-studio/
+# the installer notes here which Python has faster-whisper
+.whisper-python
+.DS_Store

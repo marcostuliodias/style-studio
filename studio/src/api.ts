@@ -67,36 +67,61 @@ export const uploadFootage = (file: File, onProgress: (p: number) => void) =>
     q.send(file);
   });
 
-/** The zip a creator unzips in the engine's folder: the skill, the pack, and the steps by hand. */
+/** The zip a creator unzips anywhere: the installers, the skill, the pack and the steps. */
 export const skillZip = async (pack: StylePack, files: SkillFiles) => {
   const { default: JSZip } = await import('jszip');
   const zip = new JSZip();
   for (const [name, text] of Object.entries(files)) zip.file(`skills/${pack.id}/${name}`, text);
   zip.file(`src/packs/${pack.id}.json`, `${JSON.stringify(pack, null, 2)}\n`);
-  zip.file(`INSTALL-${pack.id}.md`, installMd(pack));
-  return zip.generateAsync({ type: 'blob' });
+  zip.file('LEIA-PRIMEIRO.md', leiaPrimeiro(pack));
+  // the installers the Claude runs (served with the Studio, in public/installer)
+  for (const [name, exec] of [['instalar-mac.sh', true], ['INSTALAR-MAC.command', true], ['instalar.ps1', false], ['INSTALAR.bat', false]] as const) {
+    const r = await fetch(`/installer/${name}`);
+    if (r.ok) zip.file(name, await r.text(), exec ? { unixPermissions: '755' } : {});
+  }
+  return zip.generateAsync({ type: 'blob', platform: 'UNIX' });
 };
 
-export const installMd = (pack: StylePack) => `# Instalar o estilo ${pack.name}
+/** The message to paste into Claude Code: diagnose, install, follow the log, check the test video. */
+export const claudePrompt = (pack: StylePack) => `Instala para mim o estilo "${pack.name}" do Style Studio que está nesta pasta (${pack.id}-skill.zip).
+1. Extraia o zip e faça primeiro o diagnóstico: rode o instalador do meu sistema só no modo diagnóstico (Mac: bash instalar-mac.sh --diagnostico · Windows: powershell -ExecutionPolicy Bypass -File instalar.ps1 -Diagnostico) e me diga se o meu computador é compatível, o que já está pronto e o que falta.
+2. Se for compatível, rode o instalador completo em segundo plano (Mac: bash instalar-mac.sh · Windows: powershell -ExecutionPolicy Bypass -File instalar.ps1) e acompanhe o arquivo style-studio-instalacao.log da minha pasta de usuário até aparecer PRONTO!. Me explique cada etapa em palavras simples.
+3. Se der erro, leia esse registro, corrija só o que deu errado e rode de novo (ele continua de onde parou e não apaga nada meu).
+4. No final o instalador cria um vídeo de teste de 5 segundos em style-studio/out e abre a pasta. Confirme que o vídeo existe e me diga o que fazer depois.`;
 
-Este zip tem o skill de edição do ${pack.name} para o Claude Code e o pack do estilo. Ele roda no style-studio.
+export const leiaPrimeiro = (pack: StylePack) => `# ${pack.name}: comece aqui (Mac e Windows)
 
-1. Se ainda não tem o engine: \`git clone https://github.com/marcostuliodias/style-studio\` e, dentro da pasta, \`npm install\`.
-   Precisa de Node 22 ou mais novo, ffmpeg e ffprobe no PATH.
-2. Descompacte este zip dentro da pasta \`style-studio\` (a que tem o \`package.json\`). Ele adiciona
-   \`skills/${pack.id}/\` e \`src/packs/${pack.id}.json\`; o engine acha o estilo por esse id.
-3. Coloque o vídeo cortado em \`public/footage/<nome>/plate.mp4\`, com as marcações de tempo por palavra ao lado
-   (um JSON do Whisper: \`whisper plate.mp4 --model small --word_timestamps True --output_format json\`).
-4. Abra o Claude Code nessa pasta e peça: "Edite public/footage/<nome>/plate.mp4 em ${pack.name}. As marcações estão
-   em plate.json ao lado."
+Este zip tem o seu estilo e o instalador. Quem instala tudo é o próprio Claude: você só cola uma mensagem.
 
-O Claude lê \`skills/${pack.id}/SKILL.md\`, monta o plano, checa, renderiza stills para revisar e depois o vídeo em
-\`out/reels/<nome>.mp4\`.
+## Antes de tudo
+- Windows 10 ou 11, ou Mac com macOS 12 (Monterey) ou mais novo (chip M ou Intel).
+- Uns 5 GB livres e internet boa.
+- Assinatura do Claude Pro ou Max, e o app do Claude instalado (claude.ai/download), entrando com a conta do plano.
+
+## Instalar (uma vez só, 10 a 30 minutos): o Claude instala
+1. Deixe este zip (\`${pack.id}-skill.zip\`) na pasta Downloads. Não precisa extrair.
+2. Abra o app do Claude → aba Code → escolha a pasta Downloads.
+3. Cole e envie esta mensagem:
+
+> ${claudePrompt(pack).split('\n').join('\n> ')}
+
+4. Clique em Permitir sempre que o Claude pedir. No Windows, clique em Sim se o sistema perguntar se pode fazer alterações. Deixe o computador na tomada.
+5. Quando terminar, o vídeo teste-instalacao.mp4 abre numa pasta. Se ele tocar, está tudo instalado.
+
+O instalador não pede senha nem usa Homebrew: o que faltar (Node, FFmpeg, Git, Python) vai para a pasta .style-studio da sua pasta de usuário; o engine vai para style-studio, com o seu estilo em skills/${pack.id}/.
+
+**Deu erro e o Claude não resolveu?** Envie: "Deu este erro na instalação: [cole aqui]. Leia o style-studio-instalacao.log na minha pasta de usuário, explique a causa em palavras simples, corrija só o que está relacionado e continue de onde parou. Não apague os meus arquivos."
+
+**Fechou o Claude no meio?** Abra de novo na pasta Downloads e envie: "Eu fechei o Claude no meio da instalação do Style Studio. Rode o instalador de novo: ele pula o que já está pronto. No final confira o vídeo de teste."
+
+### Prefere instalar sem o Claude?
+Extraia o zip e dê dois cliques em INSTALAR-MAC.command (Mac) ou INSTALAR.bat (Windows).
+
+## Depois de instalar: o primeiro vídeo
+1. Feche o Claude por completo (Mac: Command+Q · Windows: ícone perto do relógio › Sair) e abra de novo.
+2. Na aba Code, escolha a pasta style-studio (fica na sua pasta de usuário).
+3. Coloque o vídeo cortado em public/footage/<nome>/plate.mp4 e peça: "Edite public/footage/<nome>/plate.mp4 em ${pack.name}. Se não houver marcações de tempo por palavra, faça com scripts/transcrever.py."
+4. O Claude lê skills/${pack.id}/SKILL.md, monta o plano, checa, mostra stills para você revisar e renderiza em out/reels/<nome>.mp4.
+
+Quer outro estilo? Crie no Style Studio, baixe o zip novo e repita a mensagem de instalação: ele só adiciona o estilo.
 `;
-
-/** The prompt to paste into Claude Code, which fetches the engine and installs the skill. */
-export const claudePrompt = (pack: StylePack) => `Me prepara para editar meus vídeos em "${pack.name}", um estilo de edição que fiz no Style Studio.
-
-1. Pegue o engine: se já existe uma pasta style-studio aqui, use ela (git pull antes); se não, clone https://github.com/marcostuliodias/style-studio e rode npm install nela. Precisa de Node 22 ou mais novo, ffmpeg e ffprobe; me avise se faltar algum.
-2. Descompacte meu zip ${pack.id}-skill mais recente (provavelmente na pasta Downloads; um download repetido vem como "${pack.id}-skill (1).zip") dentro da pasta style-studio, para que ele adicione skills/${pack.id}/ e src/packs/${pack.id}.json.
-3. Daqui em diante trabalhe em style-studio: leia o CLAUDE.md e o skills/${pack.id}/SKILL.md e siga os dois. Depois me peça o vídeo cortado que eu quero editar e as marcações de tempo por palavra (ou se ofereça para fazer as marcações).`;

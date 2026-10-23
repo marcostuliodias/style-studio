@@ -531,13 +531,16 @@ const SkillView: React.FC<{ pack: StylePack; json: string; skill: SkillState; on
         {skill.error && <p className="note bad">O skill não pôde ser escrito: {skill.error}</p>}
         <ol className="how">
           <li>
-            <span><strong>Baixe o skill.</strong> Ele salva <code>{pack.id}-skill.zip</code>, em geral na pasta Downloads. Não precisa abrir.</span>
+            <span><strong>Baixe o skill.</strong> Ele salva <code>{pack.id}-skill.zip</code>, em geral na pasta Downloads. Não precisa abrir nem extrair.</span>
           </li>
           <li>
-            <span><strong>Cole isto no Claude Code.</strong> Na primeira vez ele busca o engine em que o skill roda; depois adiciona o seu estilo e começa no seu vídeo.</span>
+            <span><strong>Cole isto no Claude Code</strong>, com a pasta Downloads aberta na aba Code. O instalador dentro do zip faz o diagnóstico, instala o que falta sem pedir senha (Node, FFmpeg, Git, Whisper e o engine, na sua pasta de usuário), adiciona o seu estilo e termina com um vídeo de teste de 5 segundos. De 10 a 30 minutos, uma vez só.</span>
             <pre className="prompt">{prompt}</pre>
             <button type="button" onClick={copy}>{copied ? 'Copiado' : 'Copiar prompt'}</button>
-            <span className="muted small">Prefere fazer à mão? Os passos estão em <code>INSTALL-{pack.id}.md</code> dentro do zip.</span>
+            <span className="muted small">Sem o Claude: dois cliques em <code>INSTALAR-MAC.command</code> ou <code>INSTALAR.bat</code>. Tudo está no <code>LEIA-PRIMEIRO.md</code> dentro do zip.</span>
+          </li>
+          <li>
+            <span><strong>Edite.</strong> Feche e abra o Claude de novo na pasta <code>style-studio</code>, coloque o vídeo cortado em <code>public/footage/&lt;nome&gt;/plate.mp4</code> e peça para editar em {pack.name}. Quer outro estilo? Baixe o zip novo e repita a mensagem: ele só adiciona.</span>
           </li>
         </ol>
       </div>

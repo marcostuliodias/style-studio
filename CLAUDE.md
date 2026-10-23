@@ -12,9 +12,10 @@ another style.
 
 Before the first step, check that `ffmpeg` and `ffprobe` run (the skill measures the footage with them), and ask the
 creator for whatever the skill's "What you need" lists that you don't have yet. The engine doesn't cut footage, so the
-video has to arrive cut. If they have no word timings, offer to make them with Whisper: `pip install -U openai-whisper`,
-then `whisper public/footage/<video>/plate.mp4 --model small --word_timestamps True --output_format json --output_dir
-public/footage/<video>` (it writes `plate.json` there, a time for every word).
+video has to arrive cut. If they have no word timings, make them with `scripts/transcrever.py`: `<python> scripts/transcrever.py
+public/footage/<video>/plate.mp4` writes `plate.json` beside it (a time for every word), where `<python>` is the path in
+`.whisper-python` at this root (the installer's faster-whisper environment) or any Python with faster-whisper; without
+either, `pip install -U openai-whisper` and `whisper plate.mp4 --model small --word_timestamps True --output_format json`.
 
 Run every command from this folder. The cut video goes in `public/footage/<video>/plate.mp4` (the skill's commands use
 that name) and plans in `plans/`; both stay out of git. Renders land in `out/`. The board (`npm run studio`, board
