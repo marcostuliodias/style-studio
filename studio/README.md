@@ -50,4 +50,5 @@ usa o plano que o gerador escreveu para o rascunho, ajustado a esse footage.
 
 - Legenda do seu próprio áudio: é o fluxo do skill (Whisper com marcações por palavra, plano escrito pelo Claude Code,
   render pelo engine), fora do Studio.
-- Publicar o Studio como demo (front na Vercel, servidor numa máquina com ffmpeg e Chrome).
+- Publicar: está tudo pronto em [`deploy/README.md`](../deploy/README.md) (Dockerfile, Compose com Caddy, Fly.io,
+  limites e limpeza); falta só a máquina e o domínio.

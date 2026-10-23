@@ -1,0 +1,37 @@
+# The Studio online on one machine: the app behind Caddy, which gets the HTTPS certificate for $DOMAIN by itself.
+#   DOMAIN=studio.seudominio.com docker compose up -d --build
+services:
+  studio:
+    build: .
+    restart: unless-stopped
+    environment:
+      STUDIO_HOST: 0.0.0.0
+      STUDIO_MAX_RENDERS: '1'
+      STUDIO_MAX_QUEUE: '6'
+      STUDIO_RENDER_TIMEOUT_MS: '600000'
+      STUDIO_MAX_UPLOAD_MB: '400'
+      STUDIO_MAX_FOOTAGE_SECONDS: '600'
+      STUDIO_UPLOADS: '1'
+      STUDIO_KEEP_HOURS: '6'
+    volumes:
+      - uploads:/app/public/footage/uploads
+      - renders:/app/out/studio
+    expose:
+      - '3490'
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '443:443'
+    environment:
+      DOMAIN: ${DOMAIN:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+volumes:
+  uploads:
+  renders:
+  caddy-data:
+  caddy-config:

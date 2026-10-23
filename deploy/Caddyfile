@@ -1,0 +1,13 @@
+{$DOMAIN} {
+	encode zstd gzip
+	request_body {
+		max_size 450MB
+	}
+	reverse_proxy studio:3490 {
+		# a render answers in seconds, but an upload can take minutes on a slow link
+		transport http {
+			read_timeout 600s
+			write_timeout 600s
+		}
+	}
+}

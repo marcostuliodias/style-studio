@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { StylePack } from '../../src/engine/pack';
 import type { Shoot } from '../../src/kit/Presenter';
 import type { ReelPlan } from '../../src/reel/plan';
-import { claudePrompt, makeSkill, measureTone, pollRender, skillZip, startRender, uploadFootage, type Footage, type RenderJob, type SkillFiles } from './api';
+import { claudePrompt, makeSkill, measureTone, pollRender, serverInfo, skillZip, startRender, uploadFootage, type Footage, type RenderJob, type ServerInfo, type SkillFiles } from './api';
 import { hasDraft, useDraft, useFootage, usePreviewRev } from './draft';
 import { BLURB, SHIPPED, SHIPPED_IDS, slug } from './packs';
 import { examplePlanFor } from './plan';
@@ -78,7 +78,12 @@ export const App: React.FC = () => {
   const [json, setJson] = useState('');
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [open, setOpen] = useState<Record<string, boolean>>({ type: true });
+  const [server, setServer] = useState<ServerInfo | null>(null);
   const frame = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    void serverInfo().then(setServer);
+  }, []);
 
   // The UI wears the draft's accent colour.
   useEffect(() => {
@@ -251,7 +256,7 @@ export const App: React.FC = () => {
               Tocar
             </label>
           )}
-          {stage !== 'skill' && (
+          {stage !== 'skill' && (server?.uploads ?? true) && (
             <button type="button" className="ghost footage-btn" onClick={() => setModal('footage')} title={footage ? `Agora: ${footage.name}` : 'O vídeo de demo do engine'}>
               <span className="dot" style={{ background: footage ? 'var(--accent)' : 'var(--faint)' }} />
               {footage ? footage.name : 'Usar meu footage'}
@@ -699,7 +704,7 @@ const ExportModal: React.FC<{ pack: StylePack; plan: ReelPlan; onClose: () => vo
         if (stop) return;
         misses = 0;
         setJob(j);
-        if (j.status === 'rendering') setTimeout(tick, 1200);
+        if (j.status === 'rendering' || j.status === 'queued') setTimeout(tick, 1200);
       } catch (e) {
         if (stop) return;
         if (++misses < 3) return void setTimeout(tick, 2000);
@@ -733,6 +738,12 @@ const ExportModal: React.FC<{ pack: StylePack; plan: ReelPlan; onClose: () => vo
           <button type="button" className="close" onClick={onClose} aria-label="Fechar">×</button>
         </div>
         {error && <p className="note bad">{error}</p>}
+        {job?.status === 'queued' && (
+          <div className="progress-box">
+            <p>Na fila: {job.position ?? 1}º lugar. Outro render está rodando; o seu começa em seguida.</p>
+            <div className="bar"><span style={{ width: '2%' }} /></div>
+          </div>
+        )}
         {job?.status === 'rendering' && (
           <div className="progress-box">
             <p>{pct < 5 ? 'Preparando o engine (empacotando e abrindo o Chrome)…' : `Renderizando… ${pct}%`}</p>

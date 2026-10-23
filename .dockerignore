@@ -1,0 +1,10 @@
+node_modules
+out
+dist-studio
+.git
+.claude
+plans
+# footage never goes in the image, except the demo clip the board and the example reels play
+public/footage/*
+!public/footage/demo
+public/footage/demo/plate-*.mp4

@@ -5,7 +5,18 @@ import type { ReelPlan } from '../../src/reel/plan';
 // The Studio's local API (studio/api.mjs), from the browser.
 
 export type SkillFiles = Record<string, string>;
-export type RenderJob = { status: 'rendering' | 'done' | 'error'; progress: number; log: string[]; url: string | null; error: string | null };
+export type RenderJob = { status: 'queued' | 'rendering' | 'done' | 'error'; position?: number; progress: number; log: string[]; url: string | null; error: string | null };
+export type ServerInfo = { ok: boolean; uploads: boolean; maxUploadMb: number; maxFootageSeconds: number; keepHours: number; queue: { active: number; waiting: number; max: number; maxWaiting: number } };
+
+/** What this server allows; null when it isn't answering (the API isn't running). */
+export const serverInfo = async (): Promise<ServerInfo | null> => {
+  try {
+    const r = await fetch('/api/health');
+    return r.ok ? ((await r.json()) as ServerInfo) : null;
+  } catch {
+    return null;
+  }
+};
 export type Footage = { shoot: Shoot; at: number; name: string; duration: number };
 
 const post = async <T,>(url: string, body: unknown, signal?: AbortSignal): Promise<T> => {
