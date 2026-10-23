@@ -1,10 +1,12 @@
 {
   "plate": "footage/demo/plate.mp4",
-  "width": 1920,
-  "height": 1080,
-  "faceX": 910,
-  "crown": 235,
-  "eyes": 425,
-  "chin": 650,
-  "tone": { "chest": 0.011 }
+  "width": 1280,
+  "height": 720,
+  "faceX": 615,
+  "crown": 40,
+  "eyes": 285,
+  "chin": 500,
+  "tone": {
+    "chest": 0.04
+  }
 }

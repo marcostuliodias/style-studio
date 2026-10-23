@@ -42,13 +42,14 @@ than from a transcript; a real plan's come from the word timings.
 | # | Starts | Frames | Scene | Join | Punches | For |
 |---|---|---|---|---|---|---|
 | 1 | 0 | 60 | `title` | cut |  | The hook |
-| 2 | 60 | 35 | `talk` full | cut |  | Back to the presenter, to keep the pace |
-| 3 | 95 | 78 | `word-pop` | cut |  | The hook's payoff |
-| 4 | 173 | 64 | `command` | glitch |  | List item 1 |
-| 5 | 237 | 60 | `stat` | flash |  | The number |
-| 6 | 297 | 44 | `talk` full | cut | 35 | Back to the presenter, to keep the pace |
-| 7 | 341 | 85 | `talk` tile | cut |  | Bridge to the proof |
-| 8 | 426 | 85 | `quote` | glitch |  | The proof, in someone else's words |
-| 9 | 511 | 70 | `talk` full | glitch | 38 | The end |
+| 2 | 60 | 44 | `talk` full | cut |  | Back to the presenter, to keep the pace |
+| 3 | 104 | 78 | `word-pop` | cut |  | The hook's payoff |
+| 4 | 182 | 60 | `command` | glitch |  | List item 1 |
+| 5 | 242 | 33 | `talk` full | cut | 24 | Back to the presenter, to keep the pace |
+| 6 | 275 | 60 | `stat` | flash |  | The number |
+| 7 | 335 | 35 | `talk` full | cut | 26 | Back to the presenter, to keep the pace |
+| 8 | 370 | 66 | `talk` tile | cut |  | Bridge to the proof |
+| 9 | 436 | 85 | `quote` | glitch |  | The proof, in someone else's words |
+| 10 | 521 | 80 | `talk` full | glitch | 48 | The end |
 
 Render it, if the demo footage is on this machine: `node scripts/render-reel.mjs skills/terminal/example-plan.json --stills auto`.

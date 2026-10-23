@@ -295,13 +295,13 @@ const caseNote = (pack, v) => ({ uppercase: 'in caps (the pack sets them; write 
  * `was` the word the old value is said on.
  */
 const BEATS = [
-  { kind: 'hook', say: 'Claude Code just got *five* mods you should install now', note: 'The hook' },
-  { kind: 'payoff', say: 'and this one is basically *cheating*', note: 'The hook\'s payoff', gist: '*unfair* advantage', from: 'basically', head: 'Basically cheating' },
-  { kind: 'item', say: 'Token Ledger shows what every turn costs you, *live*', note: 'List item 1', head: 'Token Ledger' },
-  { kind: 'number', say: 'my bill went from two hundred and forty dollars to *nothing*', note: 'The number', head: 'Down to $0', was: 'two' },
-  { kind: 'point', say: 'and the people using it say the *same* thing', note: 'Bridge to the proof', head: 'Same verdict' },
-  { kind: 'proof', say: 'invoicing took my whole Friday, now it runs *overnight*', note: 'The proof, in someone else\'s words' },
-  { kind: 'end', say: 'follow for the other *four*', note: 'The end', gist: '*4* more to go', from: 'other', head: 'Four more' },
+  { kind: 'hook', say: 'O Claude Code ganhou *cinco* mods que você precisa instalar agora', note: 'The hook' },
+  { kind: 'payoff', say: 'e esse aqui é basicamente *trapaça*', note: 'The hook\'s payoff', gist: 'vantagem *injusta*', from: 'basicamente', head: 'Basicamente trapaça' },
+  { kind: 'item', say: 'o Token Ledger mostra o que cada turno te custa, ao *vivo*', note: 'List item 1', head: 'Token Ledger' },
+  { kind: 'number', say: 'minha conta foi de duzentos e quarenta dólares para *nada*', note: 'The number', head: 'Caiu para $0', was: 'duzentos' },
+  { kind: 'point', say: 'e quem usa diz a *mesma* coisa', note: 'Bridge to the proof', head: 'Mesmo veredito' },
+  { kind: 'proof', say: 'faturar tomava minha sexta inteira, agora roda de *madrugada*', note: 'The proof, in someone else\'s words' },
+  { kind: 'end', say: 'segue para ver os outros *quatro*', note: 'The end', gist: 'faltam *4*', from: 'outros', head: 'Mais quatro' },
 ];
 
 /** How long a slam shows before its value lands (the old value reads, then gets struck). */
@@ -326,11 +326,11 @@ const exampleProps = (pack, scene, beat, t, icons) => {
   const plain = beat.say.replace(/\*/g, '').split(' ');
   const key = beat.say.split(' ').findIndex((w) => w.includes('*'));
   if (scene === 'list' || scene === 'stat') return { ...SCENES[scene].example, ...(icons ? { icon: scene === 'list' ? 'gauge' : 'coin' } : {}) };
-  if (scene === 'float' && beat.kind === 'hook') return { lead: 'Claude Code just got', title: '5 new mods' };
-  if (scene === 'sticker' && beat.kind === 'hook') return { stickers: [{ text: 'Claude Code', at: 2, ...(icons ? { icon: 'code' } : {}) }, { text: '5', at: t(key), kind: 'burst' }, { text: 'new mods', at: t(plain.indexOf('mods')) }] };
-  if (scene === 'float' && beat.kind === 'item') return { lead: 'Mod 1 of 5', title: 'Token Ledger', facts: SCENES.list.example.facts.slice(0, 2), ...(icons ? { icon: 'gauge' } : {}) };
+  if (scene === 'float' && beat.kind === 'hook') return { lead: 'O Claude Code ganhou', title: '5 mods novos' };
+  if (scene === 'sticker' && beat.kind === 'hook') return { stickers: [{ text: 'Claude Code', at: 2, ...(icons ? { icon: 'code' } : {}) }, { text: '5', at: t(key), kind: 'burst' }, { text: 'mods novos', at: t(plain.indexOf('mods')) }] };
+  if (scene === 'float' && beat.kind === 'item') return { lead: 'Mod 1 de 5', title: 'Token Ledger', facts: SCENES.list.example.facts.slice(0, 2), ...(icons ? { icon: 'gauge' } : {}) };
   if (scene === 'float') return { ...SCENES.float.example, ...(icons ? { icon: 'coin' } : {}) };
-  if (scene === 'slam') return { value: '$0', was: '$240', label: 'per month', at: t(key) };
+  if (scene === 'slam') return { value: '$0', was: '$240', label: 'por mês', at: t(key) };
   if (scene === 'sticker') return { stickers: [{ text: '$240', at: Math.max(2, t(plain.indexOf(beat.was))), strike: true, ...(icons ? { icon: 'coin' } : {}) }, { text: '$0', at: t(key), kind: 'burst' }] };
   if (scene === 'doodle') return { note: beat.gist, from: Math.max(4, t(plain.indexOf(beat.from))) };
   if (scene === 'word-pop') {

@@ -27,7 +27,7 @@ A lead-in, two or three headline lines with one word in the hero colour (it land
 A shot:
 
 ```json
-{"scene":"title","frames":103,"props":{"lead":"Claude Code just got","lines":[[{"t":"Mods"}],[{"t":"5","hero":true},{"t":"to install now"}]],"sizes":[260,110]}}
+{"scene":"title","frames":113,"props":{"lead":"O Claude Code ganhou","lines":[[{"t":"Mods"}],[{"t":"5","hero":true},{"t":"para instalar agora"}]],"sizes":[260,110]}}
 ```
 
 ## talk
@@ -55,7 +55,7 @@ The presenter talking, in one of the pack's layouts: full frame on their room, t
 A shot:
 
 ```json
-{"scene":"talk","frames":93,"props":{"layout":"full","punches":[72]}}
+{"scene":"talk","frames":72,"props":{"layout":"full","punches":[51]}}
 ```
 
 ## list
@@ -83,7 +83,7 @@ One item of a list: where it is in the list, its name, a line on what it does, a
 A shot:
 
 ```json
-{"scene":"list","frames":73,"in":"wipe","props":{"index":1,"of":5,"kind":"Mod","name":"Token Ledger","line":"Every turn's cost, live, in the status line.","facts":[{"k":"Context used","v":"41%"},{"k":"Tokens saved","v":"128k","win":true},{"k":"Turns","v":"17"}],"icon":"gauge"}}
+{"scene":"list","frames":103,"in":"wipe","props":{"index":1,"of":5,"kind":"Mod","name":"Token Ledger","line":"O custo de cada turno, ao vivo, na barra de status.","facts":[{"k":"Contexto usado","v":"41%"},{"k":"Tokens poupados","v":"128k","win":true},{"k":"Turnos","v":"17"}],"icon":"gauge"}}
 ```
 
 ## stat
@@ -110,7 +110,7 @@ Before and after: a lead-in and a headline, a short paragraph, then a card with 
 A shot:
 
 ```json
-{"scene":"stat","frames":113,"props":{"lead":"What it costs you","title":"Per month","text":"Same tools and the same team. The bill went from a line on every invoice to nothing at all.","before":{"k":"Before","v":"$240"},"after":{"k":"After","v":"$0"},"icon":"coin"}}
+{"scene":"stat","frames":103,"props":{"lead":"O que te custa","title":"Por mês","text":"Mesmas ferramentas e o mesmo time. A conta foi de uma linha em toda fatura para nada.","before":{"k":"Antes","v":"$240"},"after":{"k":"Depois","v":"$0"},"icon":"coin"}}
 ```
 
 ## quote
@@ -133,7 +133,7 @@ A quote: the words in the headline voice, one size for every line, the open and 
 A shot:
 
 ```json
-{"scene":"quote","frames":93,"in":"wipe","props":{"lines":["Invoicing took my","whole Friday. Now","it runs overnight."],"name":"Client name","role":"Founder · Their company"}}
+{"scene":"quote","frames":93,"in":"wipe","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
 ## doodle (Sketch's own)
@@ -157,7 +157,7 @@ The presenter full frame with the whiteboard drawn onto the footage: a scrap of 
 A shot:
 
 ```json
-{"scene":"doodle","frames":82,"props":{"note":"*unfair* advantage","from":41}}
+{"scene":"doodle","frames":82,"props":{"note":"vantagem *injusta*","from":41}}
 ```
 
 ## Not in Sketch

@@ -4,87 +4,97 @@
   "title": "Glass example",
   "shoot": {
     "plate": "footage/demo/plate.mp4",
-    "width": 1920,
-    "height": 1080,
-    "faceX": 910,
-    "crown": 235,
-    "eyes": 425,
-    "chin": 650,
+    "width": 1280,
+    "height": 720,
+    "faceX": 615,
+    "crown": 40,
+    "eyes": 285,
+    "chin": 500,
     "tone": {
-      "chest": 0.011
+      "chest": 0.04
     }
   },
   "from": 790,
   "captions": [
     {
       "from": 0,
-      "to": 55,
-      "text": "Claude Code just got *five*"
+      "to": 44,
+      "text": "O Claude Code ganhou"
     },
     {
-      "from": 55,
-      "to": 109,
-      "text": "mods you should install now"
+      "from": 44,
+      "to": 87,
+      "text": "*cinco* mods que você"
     },
     {
-      "from": 109,
-      "to": 142,
-      "text": "and this one"
+      "from": 87,
+      "to": 120,
+      "text": "precisa instalar agora"
     },
     {
-      "from": 142,
-      "to": 174,
-      "text": "is basically *cheating*"
+      "from": 120,
+      "to": 153,
+      "text": "e esse aqui"
     },
     {
-      "from": 174,
-      "to": 228,
-      "text": "Token Ledger shows what every"
+      "from": 153,
+      "to": 185,
+      "text": "é basicamente *trapaça*"
     },
     {
-      "from": 228,
+      "from": 185,
+      "to": 229,
+      "text": "o Token Ledger mostra"
+    },
+    {
+      "from": 229,
       "to": 272,
-      "text": "turn costs you, *live*"
+      "text": "o que cada turno"
     },
     {
       "from": 272,
       "to": 316,
-      "text": "my bill went from"
+      "text": "te custa, ao *vivo*"
     },
     {
       "from": 316,
-      "to": 359,
-      "text": "two hundred and forty"
+      "to": 371,
+      "text": "minha conta foi de duzentos"
     },
     {
-      "from": 359,
-      "to": 392,
-      "text": "dollars to *nothing*"
+      "from": 371,
+      "to": 425,
+      "text": "e quarenta dólares para *nada*"
     },
     {
-      "from": 392,
-      "to": 446,
-      "text": "and the people using it"
+      "from": 425,
+      "to": 468,
+      "text": "e quem usa diz"
     },
     {
-      "from": 446,
-      "to": 490,
-      "text": "say the *same* thing"
+      "from": 468,
+      "to": 501,
+      "text": "a *mesma* coisa"
     },
     {
-      "from": 588,
-      "to": 643,
-      "text": "follow for the other *four*"
+      "from": 599,
+      "to": 632,
+      "text": "segue para ver"
+    },
+    {
+      "from": 632,
+      "to": 664,
+      "text": "os outros *quatro*"
     }
   ],
   "shots": [
     {
       "scene": "title",
-      "frames": 109,
+      "frames": 120,
       "beat": "hook",
       "note": "The hook",
       "props": {
-        "lead": "Claude Code just got",
+        "lead": "O Claude Code ganhou",
         "lines": [
           [
             {
@@ -97,7 +107,7 @@
               "hero": true
             },
             {
-              "t": "to install now"
+              "t": "para instalar agora"
             }
           ]
         ],
@@ -121,19 +131,19 @@
     },
     {
       "scene": "float",
-      "frames": 98,
+      "frames": 131,
       "beat": "item",
       "note": "List item 1",
       "props": {
-        "lead": "Mod 1 of 5",
+        "lead": "Mod 1 de 5",
         "title": "Token Ledger",
         "facts": [
           {
-            "k": "Context used",
+            "k": "Contexto usado",
             "v": "41%"
           },
           {
-            "k": "Tokens saved",
+            "k": "Tokens poupados",
             "v": "128k",
             "win": true
           }
@@ -143,20 +153,20 @@
     },
     {
       "scene": "stat",
-      "frames": 120,
+      "frames": 109,
       "in": "blur",
       "beat": "number",
       "note": "The number",
       "props": {
-        "lead": "What it costs you",
-        "title": "Per month",
-        "text": "Same tools and the same team. The bill went from a line on every invoice to nothing at all.",
+        "lead": "O que te custa",
+        "title": "Por mês",
+        "text": "Mesmas ferramentas e o mesmo time. A conta foi de uma linha em toda fatura para nada.",
         "before": {
-          "k": "Before",
+          "k": "Antes",
           "v": "$240"
         },
         "after": {
-          "k": "After",
+          "k": "Depois",
           "v": "$0"
         },
         "icon": "coin"
@@ -164,12 +174,12 @@
     },
     {
       "scene": "talk",
-      "frames": 98,
+      "frames": 76,
       "beat": "point",
       "note": "Bridge to the proof",
       "props": {
         "layout": "halfBand",
-        "head": "Same verdict"
+        "head": "Mesmo veredito"
       }
     },
     {
@@ -180,23 +190,23 @@
       "note": "The proof, in someone else's words",
       "props": {
         "lines": [
-          "Invoicing took my",
-          "whole Friday. Now",
-          "it runs overnight."
+          "Faturar tomava minha",
+          "sexta inteira. Agora",
+          "roda de madrugada."
         ],
-        "name": "Client name",
-        "role": "Founder · Their company"
+        "name": "Nome do cliente",
+        "role": "Fundador · A empresa dele"
       }
     },
     {
       "scene": "talk",
-      "frames": 93,
+      "frames": 103,
       "beat": "end",
       "note": "The end",
       "props": {
         "layout": "full",
         "punches": [
-          44
+          54
         ]
       }
     }

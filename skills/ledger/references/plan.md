@@ -41,12 +41,12 @@ than from a transcript; a real plan's come from the word timings.
 
 | # | Starts | Frames | Scene | Join | Punches | For |
 |---|---|---|---|---|---|---|
-| 1 | 0 | 109 | `title` | cut |  | The hook |
-| 2 | 109 | 65 | `talk` full | cut | 54 | The hook's payoff |
-| 3 | 174 | 98 | `list` | wipe |  | List item 1 |
-| 4 | 272 | 120 | `chart` | cut |  | The number |
-| 5 | 392 | 98 | `talk` halfBand | ease |  | Bridge to the proof |
-| 6 | 490 | 98 | `quote` | wipe |  | The proof, in someone else's words |
-| 7 | 588 | 100 | `talk` tile | cut |  | The end |
+| 1 | 0 | 120 | `title` | cut |  | The hook |
+| 2 | 120 | 65 | `talk` full | cut | 54 | The hook's payoff |
+| 3 | 185 | 131 | `list` | wipe |  | List item 1 |
+| 4 | 316 | 109 | `chart` | cut |  | The number |
+| 5 | 425 | 76 | `talk` halfBand | ease |  | Bridge to the proof |
+| 6 | 501 | 98 | `quote` | wipe |  | The proof, in someone else's words |
+| 7 | 599 | 110 | `talk` tile | cut |  | The end |
 
 Render it, if the demo footage is on this machine: `node scripts/render-reel.mjs skills/ledger/example-plan.json --stills auto`.

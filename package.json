@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kelano86/style-studio-engine.git"
+    "url": "https://github.com/marcostuliodias/style-studio.git"
   },
   "engines": {
     "node": ">=22"
@@ -17,13 +17,18 @@
     "stills": "node scripts/render-stills.mjs",
     "reel": "node scripts/render-reel.mjs",
     "check": "node scripts/check-plan.mjs",
-    "skill": "node scripts/make-skill.mjs"
+    "skill": "node scripts/make-skill.mjs",
+    "studio:web": "vite --config studio/vite.config.ts",
+    "studio:build": "vite build --config studio/vite.config.ts",
+    "studio:serve": "node studio/serve.mjs"
   },
   "dependencies": {
     "@remotion/bundler": "4.0.530",
     "@remotion/cli": "4.0.530",
     "@remotion/fonts": "4.0.530",
+    "@remotion/player": "4.0.530",
     "@remotion/renderer": "4.0.530",
+    "jszip": "3.10.1",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "remotion": "4.0.530"
@@ -31,6 +36,8 @@
   "devDependencies": {
     "@types/react": "19.0.0",
     "@types/react-dom": "^19.0.0",
-    "typescript": "5.8.2"
+    "@vitejs/plugin-react": "^4.5.2",
+    "typescript": "5.8.2",
+    "vite": "^6.3.5"
   }
 }

@@ -27,7 +27,7 @@ A lead-in, two or three headline lines with one word in the hero colour (it land
 A shot:
 
 ```json
-{"scene":"title","frames":60,"props":{"lead":"Claude Code just got","lines":[[{"t":"Mods"}],[{"t":"5","hero":true},{"t":"to install now"}]],"sizes":[260,110]}}
+{"scene":"title","frames":60,"props":{"lead":"O Claude Code ganhou","lines":[[{"t":"Mods"}],[{"t":"5","hero":true},{"t":"para instalar agora"}]],"sizes":[260,110]}}
 ```
 
 ## talk
@@ -55,7 +55,7 @@ The presenter talking, in one of the pack's layouts: full frame on their room, t
 A shot:
 
 ```json
-{"scene":"talk","frames":35,"props":{"layout":"full"}}
+{"scene":"talk","frames":44,"props":{"layout":"full"}}
 ```
 
 ## list
@@ -83,7 +83,7 @@ One item of a list: where it is in the list, its name, a line on what it does, a
 A shot:
 
 ```json
-{"scene":"list","frames":75,"props":{"index":1,"of":5,"kind":"Mod","name":"Token Ledger","line":"Every turn's cost, live, in the status line.","facts":[{"k":"Context used","v":"41%"},{"k":"Tokens saved","v":"128k","win":true},{"k":"Turns","v":"17"}]}}
+{"scene":"list","frames":75,"props":{"index":1,"of":5,"kind":"Mod","name":"Token Ledger","line":"O custo de cada turno, ao vivo, na barra de status.","facts":[{"k":"Contexto usado","v":"41%"},{"k":"Tokens poupados","v":"128k","win":true},{"k":"Turnos","v":"17"}]}}
 ```
 
 ## stat
@@ -110,7 +110,7 @@ Before and after: a lead-in and a headline, a short paragraph, then a card with 
 A shot:
 
 ```json
-{"scene":"stat","frames":60,"in":"flash","props":{"lead":"What it costs you","title":"Per month","text":"Same tools and the same team. The bill went from a line on every invoice to nothing at all.","before":{"k":"Before","v":"$240"},"after":{"k":"After","v":"$0"},"icon":"coin"}}
+{"scene":"stat","frames":60,"in":"flash","props":{"lead":"O que te custa","title":"Por mês","text":"Mesmas ferramentas e o mesmo time. A conta foi de uma linha em toda fatura para nada.","before":{"k":"Antes","v":"$240"},"after":{"k":"Depois","v":"$0"},"icon":"coin"}}
 ```
 
 ## quote
@@ -133,7 +133,7 @@ A quote: the words in the headline voice, one size for every line, the open and 
 A shot:
 
 ```json
-{"scene":"quote","frames":85,"in":"glitch","props":{"lines":["Invoicing took my","whole Friday. Now","it runs overnight."],"name":"Client name","role":"Founder · Their company"}}
+{"scene":"quote","frames":85,"in":"glitch","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
 ## word-pop (Terminal's own)
@@ -156,7 +156,7 @@ Land the spoken line word by word: big words popping in over the speaker, the ke
 A shot:
 
 ```json
-{"scene":"word-pop","frames":78,"props":{"groups":[{"from":0,"to":19,"words":[{"text":"and","at":0},{"text":"this","at":10}]},{"from":19,"to":38,"words":[{"text":"one","at":19},{"text":"is","at":29}]},{"from":38,"to":48,"words":[{"text":"basically","at":38}]},{"from":48,"to":78,"words":[{"text":"cheating","at":48,"key":true}]}]}}
+{"scene":"word-pop","frames":78,"props":{"groups":[{"from":0,"to":19,"words":[{"text":"e","at":0},{"text":"esse","at":10}]},{"from":19,"to":38,"words":[{"text":"aqui","at":19},{"text":"é","at":29}]},{"from":38,"to":48,"words":[{"text":"basicamente","at":38}]},{"from":48,"to":78,"words":[{"text":"trapaça","at":48,"key":true}]}]}}
 ```
 
 ## command (Terminal's own)
@@ -181,7 +181,7 @@ A terminal window types a command at the prompt, then prints its output a line a
 A shot:
 
 ```json
-{"scene":"command","frames":64,"in":"glitch","props":{"command":"claude mods add token-ledger","output":[{"t":"✓ installed token-ledger 1.4"},{"t":"✓ status line patched"},{"t":"tokens saved: 128k","win":true}]}}
+{"scene":"command","frames":60,"in":"glitch","props":{"command":"claude mods add token-ledger","output":[{"t":"✓ token-ledger 1.4 instalado"},{"t":"✓ barra de status ajustada"},{"t":"tokens poupados: 128k","win":true}]}}
 ```
 
 ## Not in Terminal

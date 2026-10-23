@@ -4,14 +4,14 @@
   "title": "Sketch example",
   "shoot": {
     "plate": "footage/demo/plate.mp4",
-    "width": 1920,
-    "height": 1080,
-    "faceX": 910,
-    "crown": 235,
-    "eyes": 425,
-    "chin": 650,
+    "width": 1280,
+    "height": 720,
+    "faceX": 615,
+    "crown": 40,
+    "eyes": 285,
+    "chin": 500,
     "tone": {
-      "chest": 0.011
+      "chest": 0.04
     }
   },
   "from": 790,
@@ -19,92 +19,87 @@
     {
       "from": 0,
       "to": 41,
-      "text": "Claude Code just got"
+      "text": "O Claude Code ganhou"
     },
     {
       "from": 41,
-      "to": 72,
-      "text": "*five* mods you"
+      "to": 82,
+      "text": "*cinco* mods que você"
     },
     {
-      "from": 72,
-      "to": 103,
-      "text": "should install now"
+      "from": 82,
+      "to": 113,
+      "text": "precisa instalar agora"
     },
     {
-      "from": 103,
-      "to": 134,
-      "text": "and this one"
+      "from": 113,
+      "to": 144,
+      "text": "e esse aqui"
     },
     {
-      "from": 134,
-      "to": 165,
-      "text": "is basically *cheating*"
+      "from": 144,
+      "to": 175,
+      "text": "é basicamente *trapaça*"
     },
     {
-      "from": 165,
-      "to": 196,
-      "text": "Token Ledger shows"
+      "from": 175,
+      "to": 216,
+      "text": "o Token Ledger mostra"
     },
     {
-      "from": 196,
-      "to": 227,
-      "text": "what every turn"
+      "from": 216,
+      "to": 257,
+      "text": "o que cada turno"
     },
     {
-      "from": 227,
-      "to": 258,
-      "text": "costs you, *live*"
+      "from": 257,
+      "to": 298,
+      "text": "te custa, ao *vivo*"
     },
     {
-      "from": 258,
-      "to": 299,
-      "text": "my bill went from"
+      "from": 298,
+      "to": 339,
+      "text": "minha conta foi de"
     },
     {
-      "from": 299,
-      "to": 340,
-      "text": "two hundred and forty"
+      "from": 339,
+      "to": 370,
+      "text": "duzentos e quarenta"
     },
     {
-      "from": 340,
-      "to": 371,
-      "text": "dollars to *nothing*"
+      "from": 370,
+      "to": 401,
+      "text": "dólares para *nada*"
     },
     {
-      "from": 371,
-      "to": 402,
-      "text": "and the people"
+      "from": 401,
+      "to": 442,
+      "text": "e quem usa diz"
     },
     {
-      "from": 402,
-      "to": 433,
-      "text": "using it say"
+      "from": 442,
+      "to": 473,
+      "text": "a *mesma* coisa"
     },
     {
-      "from": 433,
-      "to": 464,
-      "text": "the *same* thing"
+      "from": 566,
+      "to": 597,
+      "text": "segue para ver"
     },
     {
-      "from": 557,
-      "to": 588,
-      "text": "follow for the"
-    },
-    {
-      "from": 588,
-      "to": 608,
-      "text": "other *four*"
+      "from": 597,
+      "to": 628,
+      "text": "os outros *quatro*"
     }
   ],
   "shots": [
     {
       "scene": "title",
-      "frames": 103,
+      "frames": 113,
       "beat": "hook",
       "note": "The hook",
       "props": {
-        "lead": "Claude Code just got",
+        "lead": "O Claude Code ganhou",
         "lines": [
           [
             {
@@ -117,7 +112,7 @@
               "hero": true
             },
             {
-              "t": "to install now"
+              "t": "para instalar agora"
             }
           ]
         ],
@@ -133,13 +128,13 @@
       "beat": "payoff",
       "note": "The hook's payoff",
       "props": {
-        "note": "*unfair* advantage",
+        "note": "vantagem *injusta*",
         "from": 41
       }
     },
     {
       "scene": "list",
-      "frames": 73,
+      "frames": 103,
       "in": "wipe",
       "beat": "item",
       "note": "List item 1",
@@ -148,19 +143,19 @@
         "of": 5,
         "kind": "Mod",
         "name": "Token Ledger",
-        "line": "Every turn's cost, live, in the status line.",
+        "line": "O custo de cada turno, ao vivo, na barra de status.",
         "facts": [
           {
-            "k": "Context used",
+            "k": "Contexto usado",
             "v": "41%"
           },
           {
-            "k": "Tokens saved",
+            "k": "Tokens poupados",
             "v": "128k",
             "win": true
           },
           {
-            "k": "Turns",
+            "k": "Turnos",
             "v": "17"
           }
         ],
@@ -169,19 +164,19 @@
     },
     {
       "scene": "stat",
-      "frames": 113,
+      "frames": 103,
       "beat": "number",
       "note": "The number",
       "props": {
-        "lead": "What it costs you",
-        "title": "Per month",
-        "text": "Same tools and the same team. The bill went from a line on every invoice to nothing at all.",
+        "lead": "O que te custa",
+        "title": "Por mês",
+        "text": "Mesmas ferramentas e o mesmo time. A conta foi de uma linha em toda fatura para nada.",
         "before": {
-          "k": "Before",
+          "k": "Antes",
           "v": "$240"
         },
         "after": {
-          "k": "After",
+          "k": "Depois",
           "v": "$0"
         },
         "icon": "coin"
@@ -189,13 +184,13 @@
     },
     {
       "scene": "talk",
-      "frames": 93,
+      "frames": 72,
       "beat": "point",
       "note": "Bridge to the proof",
       "props": {
         "layout": "full",
         "punches": [
-          72
+          51
         ]
       }
     },
@@ -207,22 +202,22 @@
       "note": "The proof, in someone else's words",
       "props": {
         "lines": [
-          "Invoicing took my",
-          "whole Friday. Now",
-          "it runs overnight."
+          "Faturar tomava minha",
+          "sexta inteira. Agora",
+          "roda de madrugada."
         ],
-        "name": "Client name",
-        "role": "Founder · Their company"
+        "name": "Nome do cliente",
+        "role": "Fundador · A empresa dele"
       }
     },
     {
       "scene": "doodle",
-      "frames": 81,
+      "frames": 92,
       "beat": "end",
       "note": "The end",
       "props": {
-        "note": "*4* more to go",
-        "from": 31
+        "note": "faltam *4*",
+        "from": 41
       }
     }
   ]

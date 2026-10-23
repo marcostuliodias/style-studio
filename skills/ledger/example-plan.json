@@ -4,77 +4,72 @@
   "title": "Ledger example",
   "shoot": {
     "plate": "footage/demo/plate.mp4",
-    "width": 1920,
-    "height": 1080,
-    "faceX": 910,
-    "crown": 235,
-    "eyes": 425,
-    "chin": 650,
+    "width": 1280,
+    "height": 720,
+    "faceX": 615,
+    "crown": 40,
+    "eyes": 285,
+    "chin": 500,
     "tone": {
-      "chest": 0.011
+      "chest": 0.04
     }
   },
   "from": 790,
   "captions": [
     {
       "from": 0,
-      "to": 55,
-      "text": "Claude Code just got *five*"
+      "to": 65,
+      "text": "O Claude Code ganhou *cinco* mods"
     },
     {
-      "from": 55,
-      "to": 109,
-      "text": "mods you should install now"
+      "from": 65,
+      "to": 120,
+      "text": "que você precisa instalar agora"
     },
     {
-      "from": 109,
-      "to": 174,
-      "text": "and this one is basically *cheating*"
+      "from": 120,
+      "to": 185,
+      "text": "e esse aqui é basicamente *trapaça*"
     },
     {
-      "from": 174,
-      "to": 228,
-      "text": "Token Ledger shows what every"
+      "from": 185,
+      "to": 251,
+      "text": "o Token Ledger mostra o que"
     },
     {
-      "from": 228,
-      "to": 272,
-      "text": "turn costs you, *live*"
+      "from": 251,
+      "to": 316,
+      "text": "cada turno te custa, ao *vivo*"
     },
     {
-      "from": 272,
-      "to": 337,
-      "text": "my bill went from two hundred"
+      "from": 316,
+      "to": 371,
+      "text": "minha conta foi de duzentos"
     },
     {
-      "from": 337,
-      "to": 392,
-      "text": "and forty dollars to *nothing*"
+      "from": 371,
+      "to": 425,
+      "text": "e quarenta dólares para *nada*"
     },
     {
-      "from": 392,
-      "to": 446,
-      "text": "and the people using it"
+      "from": 425,
+      "to": 501,
+      "text": "e quem usa diz a *mesma* coisa"
     },
     {
-      "from": 446,
-      "to": 490,
-      "text": "say the *same* thing"
-    },
-    {
-      "from": 588,
-      "to": 643,
-      "text": "follow for the other *four*"
+      "from": 599,
+      "to": 664,
+      "text": "segue para ver os outros *quatro*"
     }
   ],
   "shots": [
     {
       "scene": "title",
-      "frames": 109,
+      "frames": 120,
       "beat": "hook",
       "note": "The hook",
       "props": {
-        "lead": "Claude Code just got",
+        "lead": "O Claude Code ganhou",
         "lines": [
           [
             {
@@ -87,7 +82,7 @@
               "hero": true
             },
             {
-              "t": "to install now"
+              "t": "para instalar agora"
             }
           ]
         ],
@@ -111,7 +106,7 @@
     },
     {
       "scene": "list",
-      "frames": 98,
+      "frames": 131,
       "in": "wipe",
       "beat": "item",
       "note": "List item 1",
@@ -120,19 +115,19 @@
         "of": 5,
         "kind": "Mod",
         "name": "Token Ledger",
-        "line": "Every turn's cost, live, in the status line.",
+        "line": "O custo de cada turno, ao vivo, na barra de status.",
         "facts": [
           {
-            "k": "Context used",
+            "k": "Contexto usado",
             "v": "41%"
           },
           {
-            "k": "Tokens saved",
+            "k": "Tokens poupados",
             "v": "128k",
             "win": true
           },
           {
-            "k": "Turns",
+            "k": "Turnos",
             "v": "17"
           }
         ]
@@ -140,37 +135,37 @@
     },
     {
       "scene": "chart",
-      "frames": 120,
+      "frames": 109,
       "beat": "number",
       "note": "The number",
       "props": {
-        "lead": "What it costs you",
-        "title": "Per month",
+        "lead": "O que te custa",
+        "title": "Por mês",
         "bars": [
           {
-            "k": "Before",
+            "k": "Antes",
             "v": 240,
             "label": "$240"
           },
           {
-            "k": "After",
+            "k": "Depois",
             "v": 0,
             "label": "$0",
             "win": true
           }
         ],
-        "source": "Source: my invoices, January to June"
+        "source": "Fonte: minhas faturas, de janeiro a junho"
       }
     },
     {
       "scene": "talk",
-      "frames": 98,
+      "frames": 76,
       "in": "ease",
       "beat": "point",
       "note": "Bridge to the proof",
       "props": {
         "layout": "halfBand",
-        "head": "Same verdict"
+        "head": "Mesmo veredito"
       }
     },
     {
@@ -181,22 +176,22 @@
       "note": "The proof, in someone else's words",
       "props": {
         "lines": [
-          "Invoicing took my",
-          "whole Friday. Now",
-          "it runs overnight."
+          "Faturar tomava minha",
+          "sexta inteira. Agora",
+          "roda de madrugada."
         ],
-        "name": "Client name",
-        "role": "Founder · Their company"
+        "name": "Nome do cliente",
+        "role": "Fundador · A empresa dele"
       }
     },
     {
       "scene": "talk",
-      "frames": 100,
+      "frames": 110,
       "beat": "end",
       "note": "The end",
       "props": {
         "layout": "tile",
-        "head": "Four more"
+        "head": "Mais quatro"
       }
     }
   ]

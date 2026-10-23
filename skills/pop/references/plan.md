@@ -41,12 +41,13 @@ than from a transcript; a real plan's come from the word timings.
 
 | # | Starts | Frames | Scene | Join | Punches | For |
 |---|---|---|---|---|---|---|
-| 1 | 0 | 92 | `sticker` | cut |  | The hook |
-| 2 | 92 | 76 | `word-pop` | cut |  | The hook's payoff |
-| 3 | 168 | 62 | `list` | whip |  | List item 1 |
-| 4 | 230 | 123 | `sticker` | flash |  | The number |
-| 5 | 353 | 62 | `talk` full | cut | 7, 34 | Bridge to the proof |
-| 6 | 415 | 83 | `quote` | whip |  | The proof, in someone else's words |
-| 7 | 498 | 69 | `talk` full | cut | 28 | The end |
+| 1 | 0 | 102 | `sticker` | cut |  | The hook |
+| 2 | 102 | 76 | `word-pop` | cut |  | The hook's payoff |
+| 3 | 178 | 45 | `list` | whip |  | List item 1 |
+| 4 | 223 | 45 | `talk` full | cut | 17 | Back to the presenter, to keep the pace |
+| 5 | 268 | 113 | `sticker` | flash |  | The number |
+| 6 | 381 | 44 | `talk` full | cut | 7, 25 | Bridge to the proof |
+| 7 | 425 | 83 | `quote` | whip |  | The proof, in someone else's words |
+| 8 | 508 | 78 | `talk` full | cut | 28 | The end |
 
 Render it, if the demo footage is on this machine: `node scripts/render-reel.mjs skills/pop/example-plan.json --stills auto`.

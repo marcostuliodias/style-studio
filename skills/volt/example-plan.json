@@ -4,14 +4,14 @@
   "title": "Volt example",
   "shoot": {
     "plate": "footage/demo/plate.mp4",
-    "width": 1920,
-    "height": 1080,
-    "faceX": 910,
-    "crown": 235,
-    "eyes": 425,
-    "chin": 650,
+    "width": 1280,
+    "height": 720,
+    "faceX": 615,
+    "crown": 40,
+    "eyes": 285,
+    "chin": 500,
     "tone": {
-      "chest": 0.011
+      "chest": 0.04
     }
   },
   "from": 790,
@@ -19,92 +19,97 @@
     {
       "from": 0,
       "to": 27,
-      "text": "Claude Code just"
+      "text": "O Claude Code"
     },
     {
       "from": 27,
       "to": 54,
-      "text": "got *five* mods"
+      "text": "ganhou *cinco* mods"
     },
     {
       "from": 54,
-      "to": 72,
-      "text": "you should"
+      "to": 81,
+      "text": "que você precisa"
     },
     {
-      "from": 72,
-      "to": 90,
-      "text": "install now"
+      "from": 81,
+      "to": 99,
+      "text": "instalar agora"
     },
     {
-      "from": 144,
-      "to": 171,
-      "text": "Token Ledger shows"
+      "from": 153,
+      "to": 180,
+      "text": "o Token Ledger"
     },
     {
-      "from": 171,
-      "to": 198,
-      "text": "what every turn"
+      "from": 180,
+      "to": 207,
+      "text": "mostra o que"
     },
     {
-      "from": 198,
-      "to": 225,
-      "text": "costs you, *live*"
+      "from": 207,
+      "to": 234,
+      "text": "cada turno te"
     },
     {
-      "from": 225,
-      "to": 252,
-      "text": "my bill went"
+      "from": 234,
+      "to": 261,
+      "text": "custa, ao *vivo*"
     },
     {
-      "from": 252,
-      "to": 279,
-      "text": "from two hundred"
+      "from": 261,
+      "to": 288,
+      "text": "minha conta foi"
     },
     {
-      "from": 279,
-      "to": 306,
-      "text": "and forty dollars"
+      "from": 288,
+      "to": 315,
+      "text": "de duzentos e"
     },
     {
-      "from": 306,
-      "to": 324,
-      "text": "to *nothing*"
+      "from": 315,
+      "to": 333,
+      "text": "quarenta dólares"
     },
     {
-      "from": 324,
+      "from": 333,
       "to": 351,
-      "text": "and the people"
+      "text": "para *nada*"
     },
     {
       "from": 351,
       "to": 378,
-      "text": "using it say"
+      "text": "e quem usa"
     },
     {
       "from": 378,
-      "to": 405,
-      "text": "the *same* thing"
+      "to": 396,
+      "text": "diz a"
     },
     {
-      "from": 486,
-      "to": 513,
-      "text": "follow for the"
+      "from": 396,
+      "to": 414,
+      "text": "*mesma* coisa"
     },
     {
-      "from": 513,
-      "to": 531,
-      "text": "other *four*"
+      "from": 495,
+      "to": 522,
+      "text": "segue para ver"
+    },
+    {
+      "from": 522,
+      "to": 549,
+      "text": "os outros *quatro*"
     }
   ],
   "shots": [
     {
       "scene": "title",
-      "frames": 45,
+      "frames": 50,
       "beat": "hook",
       "note": "The hook",
       "props": {
-        "lead": "Claude Code just got",
+        "lead": "O Claude Code ganhou",
         "lines": [
           [
             {
@@ -117,7 +122,7 @@
               "hero": true
             },
             {
-              "t": "to install now"
+              "t": "para instalar agora"
             }
           ]
         ],
@@ -129,14 +134,14 @@
     },
     {
       "scene": "talk",
-      "frames": 45,
+      "frames": 49,
       "beat": "hook",
       "note": "Back to the presenter, to keep the pace",
       "props": {
         "layout": "full",
         "punches": [
-          9,
-          27
+          4,
+          31
         ]
       }
     },
@@ -152,11 +157,11 @@
             "to": 18,
             "words": [
               {
-                "text": "and",
+                "text": "e",
                 "at": 0
               },
               {
-                "text": "this",
+                "text": "esse",
                 "at": 9
               }
             ]
@@ -166,11 +171,11 @@
             "to": 36,
             "words": [
               {
-                "text": "one",
+                "text": "aqui",
                 "at": 18
               },
               {
-                "text": "is",
+                "text": "é",
                 "at": 27
               }
             ]
@@ -180,7 +185,7 @@
             "to": 45,
             "words": [
               {
-                "text": "basically",
+                "text": "basicamente",
                 "at": 36
               }
             ]
@@ -190,7 +195,7 @@
             "to": 75,
             "words": [
               {
-                "text": "cheating",
+                "text": "trapaça",
                 "at": 45,
                 "key": true
               }
@@ -201,7 +206,7 @@
     },
     {
       "scene": "list",
-      "frames": 60,
+      "frames": 45,
       "in": "zoom",
       "beat": "item",
       "note": "List item 1",
@@ -210,19 +215,19 @@
         "of": 5,
         "kind": "Mod",
         "name": "Token Ledger",
-        "line": "Every turn's cost, live, in the status line.",
+        "line": "O custo de cada turno, ao vivo, na barra de status.",
         "facts": [
           {
-            "k": "Context used",
+            "k": "Contexto usado",
             "v": "41%"
           },
           {
-            "k": "Tokens saved",
+            "k": "Tokens poupados",
             "v": "128k",
             "win": true
           },
           {
-            "k": "Turns",
+            "k": "Turnos",
             "v": "17"
           }
         ]
@@ -230,7 +235,19 @@
     },
     {
       "scene": "talk",
-      "frames": 66,
+      "frames": 42,
+      "beat": "item",
+      "note": "Back to the presenter, to keep the pace",
+      "props": {
+        "layout": "full",
+        "punches": [
+          15
+        ]
+      }
+    },
+    {
+      "scene": "talk",
+      "frames": 57,
       "beat": "number",
       "note": "The number: the set-up",
       "props": {
@@ -250,20 +267,20 @@
       "props": {
         "value": "$0",
         "was": "$240",
-        "label": "per month",
+        "label": "por mês",
         "at": 24
       }
     },
     {
       "scene": "talk",
-      "frames": 60,
+      "frames": 42,
       "beat": "point",
       "note": "Bridge to the proof",
       "props": {
         "layout": "full",
         "punches": [
           6,
-          33
+          24
         ]
       }
     },
@@ -275,12 +292,12 @@
       "note": "The proof, in someone else's words",
       "props": {
         "lines": [
-          "Invoicing took my",
-          "whole Friday. Now",
-          "it runs overnight."
+          "Faturar tomava minha",
+          "sexta inteira. Agora",
+          "roda de madrugada."
         ],
-        "name": "Client name",
-        "role": "Founder · Their company"
+        "name": "Nome do cliente",
+        "role": "Fundador · A empresa dele"
       }
     },
     {
@@ -297,7 +314,7 @@
     },
     {
       "scene": "talk",
-      "frames": 60,
+      "frames": 69,
       "beat": "end",
       "note": "The end",
       "props": {

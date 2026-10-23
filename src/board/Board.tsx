@@ -28,10 +28,10 @@ const AT = handedShoot?.at ?? 820;
 
 export const BoardTitle: React.FC = () => (
   <TitleStack
-    lead="Claude Code just got"
-    lines={[[{ t: 'Mods' }], [{ t: '5', hero: true }, { t: 'to install now' }]]}
+    lead="O Claude Code ganhou"
+    lines={[[{ t: 'Mods' }], [{ t: '5', hero: true }, { t: 'para instalar agora' }]]}
     sizes={[260, 110]}
-    sub={{ text: 'five mods that feel', key: 'illegal' }}
+    sub={{ text: 'cinco mods que parecem', key: 'trapaça' }}
     shoot={DEMO}
     at={AT}
   />
@@ -43,53 +43,53 @@ export const BoardList: React.FC = () => (
     of={5}
     kind="Mod"
     name="Token Ledger"
-    line="Every turn's cost, live, in the status line."
-    facts={[{ k: 'Context used', v: '41%' }, { k: 'Tokens saved', v: '128k', win: true }, { k: 'Turns', v: '17' }]}
+    line="O custo de cada turno, ao vivo, na barra de status."
+    facts={[{ k: 'Contexto usado', v: '41%' }, { k: 'Tokens poupados', v: '128k', win: true }, { k: 'Turnos', v: '17' }]}
     icon="gauge"
-    sub={{ text: 'it never forgets', key: 'anything' }}
+    sub={{ text: 'ele nunca esquece', key: 'nada' }}
   />
 );
 
 export const BoardStat: React.FC = () => (
   <StatCompare
-    lead="What it costs you"
-    title="Per month"
-    text="Same tools and the same team. The bill went from a line on every invoice to nothing at all."
-    before={{ k: 'Before', v: '$240' }}
-    after={{ k: 'After', v: '$0' }}
+    lead="O que te custa"
+    title="Por mês"
+    text="Mesmas ferramentas e o mesmo time. A conta foi de uma linha em toda fatura para nada."
+    before={{ k: 'Antes', v: '$240' }}
+    after={{ k: 'Depois', v: '$0' }}
     icon="coin"
-    sub={{ text: 'you pay', key: 'nothing' }}
+    sub={{ text: 'você paga', key: 'nada' }}
   />
 );
 
 export const BoardQuote: React.FC = () => (
-  <QuoteCard lines={['Invoicing took my', 'whole Friday. Now', 'it runs overnight.']} name="Client name" role="Founder · Their company" />
+  <QuoteCard lines={['Faturar tomava minha', 'sexta inteira. Agora', 'roda de madrugada.']} name="Nome do cliente" role="Fundador · A empresa dele" />
 );
 
 const POP: PopGroup[] = [
-  { from: 0, to: 22, words: [{ text: 'this', at: 0 }, { text: 'mod', at: 7 }] },
-  { from: 22, to: 46, words: [{ text: 'is', at: 22 }, { text: 'basically', at: 28 }] },
-  { from: 46, to: 96, words: [{ text: 'cheating', at: 46, key: true }] },
+  { from: 0, to: 22, words: [{ text: 'esse', at: 0 }, { text: 'mod', at: 7 }] },
+  { from: 22, to: 46, words: [{ text: 'é', at: 22 }, { text: 'basicamente', at: 28 }] },
+  { from: 46, to: 96, words: [{ text: 'trapaça', at: 46, key: true }] },
 ];
 
 export const BoardWordPop: React.FC = () => <WordPop shoot={DEMO} at={AT - 20} groups={POP} />;
 
 // The scene types packs bring, each with the board's words; a pack that doesn't bring one refuses to render it.
 
-export const BoardSlam: React.FC = () => <Slam value="$0" was="$240" label="per month" at={12} />;
+export const BoardSlam: React.FC = () => <Slam value="$0" was="$240" label="por mês" at={12} />;
 
 export const BoardChart: React.FC = () => (
-  <Chart lead="What it costs you" title="Per month" bars={[{ k: 'Before', v: 240, label: '$240' }, { k: 'After', v: 0, label: '$0', win: true }]} source="Source: my invoices, January to June" />
+  <Chart lead="O que te custa" title="Por mês" bars={[{ k: 'Antes', v: 240, label: '$240' }, { k: 'Depois', v: 0, label: '$0', win: true }]} source="Fonte: minhas faturas, de janeiro a junho" />
 );
 
-export const BoardDoodle: React.FC = () => <Doodle shoot={DEMO} at={AT} note="basically *cheating*" from={6} />;
+export const BoardDoodle: React.FC = () => <Doodle shoot={DEMO} at={AT} note="basicamente *trapaça*" from={6} />;
 
 export const BoardCommand: React.FC = () => (
-  <Command command="claude mods add token-ledger" output={[{ t: '✓ installed token-ledger 1.4' }, { t: '✓ status line patched' }, { t: 'tokens saved: 128k', win: true }]} shoot={DEMO} at={AT} />
+  <Command command="claude mods add token-ledger" output={[{ t: '✓ token-ledger 1.4 instalado' }, { t: '✓ barra de status ajustada' }, { t: 'tokens poupados: 128k', win: true }]} shoot={DEMO} at={AT} />
 );
 
-export const BoardFloat: React.FC = () => <Float shoot={DEMO} at={AT} lead="What it costs you" title="Per month" value="$0" was="$240" icon="coin" />;
+export const BoardFloat: React.FC = () => <Float shoot={DEMO} at={AT} lead="O que te custa" title="Por mês" value="$0" was="$240" icon="coin" />;
 
 export const BoardSticker: React.FC = () => (
-  <Sticker shoot={DEMO} at={AT} stickers={[{ text: '$240', at: 6, strike: true, icon: 'coin' }, { text: '$0', at: 30, kind: 'burst' }, { text: 'every month', at: 46 }]} />
+  <Sticker shoot={DEMO} at={AT} stickers={[{ text: '$240', at: 6, strike: true, icon: 'coin' }, { text: '$0', at: 30, kind: 'burst' }, { text: 'todo mês', at: 46 }]} />
 );

@@ -41,15 +41,16 @@ than from a transcript; a real plan's come from the word timings.
 
 | # | Starts | Frames | Scene | Join | Punches | For |
 |---|---|---|---|---|---|---|
-| 1 | 0 | 45 | `title` | cut |  | The hook |
-| 2 | 45 | 45 | `talk` full | cut | 9, 27 | Back to the presenter, to keep the pace |
-| 3 | 90 | 75 | `word-pop` | cut |  | The hook's payoff |
-| 4 | 165 | 60 | `list` | zoom |  | List item 1 |
-| 5 | 225 | 66 | `talk` full | cut | 27, 54 | The number: the set-up |
-| 6 | 291 | 54 | `slam` | flash |  | The number |
-| 7 | 345 | 60 | `talk` full | cut | 6, 33 | Bridge to the proof |
-| 8 | 405 | 45 | `quote` | zoom |  | The proof, in someone else's words |
-| 9 | 450 | 36 | `talk` full | cut | 9 | Back to the presenter, to keep the pace |
-| 10 | 486 | 60 | `talk` full | cut | 27 | The end |
+| 1 | 0 | 50 | `title` | cut |  | The hook |
+| 2 | 50 | 49 | `talk` full | cut | 4, 31 | Back to the presenter, to keep the pace |
+| 3 | 99 | 75 | `word-pop` | cut |  | The hook's payoff |
+| 4 | 174 | 45 | `list` | zoom |  | List item 1 |
+| 5 | 219 | 42 | `talk` full | cut | 15 | Back to the presenter, to keep the pace |
+| 6 | 261 | 57 | `talk` full | cut | 27, 54 | The number: the set-up |
+| 7 | 318 | 54 | `slam` | flash |  | The number |
+| 8 | 372 | 42 | `talk` full | cut | 6, 24 | Bridge to the proof |
+| 9 | 414 | 45 | `quote` | zoom |  | The proof, in someone else's words |
+| 10 | 459 | 36 | `talk` full | cut | 9 | Back to the presenter, to keep the pace |
+| 11 | 495 | 69 | `talk` full | cut | 27 | The end |
 
 Render it, if the demo footage is on this machine: `node scripts/render-reel.mjs skills/volt/example-plan.json --stills auto`.

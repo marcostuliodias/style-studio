@@ -1,5 +1,9 @@
 # Style Studio engine
 
+> **Este fork** adiciona o Style Studio web em [`studio/`](studio/README.md): o painel de escolhas, a prévia ao vivo,
+> o skill em zip, a exportação de vídeo e o footage próprio, com o roteiro de demonstração em português.
+> `npm run studio:web` abre em <http://localhost:3490>. O engine original é de [kelano86](https://github.com/kelano86/style-studio-engine), MIT.
+
 The video engine behind [Style Studio](https://videoeditskill.synteq.app). Pick an editing style there, make it yours
 (the fonts, the colours, the backgrounds, how the animations move), download its skill, and Claude Code edits your
 talking-head videos in that style with this engine: it plans the shots, writes the captions, checks the plan and

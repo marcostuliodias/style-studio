@@ -5,3 +5,4 @@ public/footage/
 # reel plans are per creator and per video, like the footage
 plans/
 .env
+dist-studio/
