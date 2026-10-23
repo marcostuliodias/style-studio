@@ -158,6 +158,32 @@ export const App: React.FC = () => {
   }, [d]);
 
   const base = SHIPPED[d.draft.base];
+  // What the panel's previews draw with: the pack's ground, its type colour on it, its ink, hero and cards, and
+  // the headline face, so every thumbnail shows the choice as it would land in this style.
+  const panelVars = useMemo(() => {
+    const g = pack.composition.ground;
+    const ground = pack.grounds[g];
+    const cards = pack.cards[g];
+    return {
+      ['--pv-ground' as string]: ground.colour,
+      ['--pv-on-ground' as string]: g === 'dark' ? pack.palette.text : pack.palette.ink,
+      ['--pv-soft' as string]: g === 'dark' ? pack.palette.textSoft : pack.palette.inkSoft,
+      ['--pv-ink' as string]: pack.palette.ink,
+      ['--pv-hero' as string]: pack.palette.win,
+      ['--pv-dark' as string]: pack.grounds.dark.colour,
+      ['--pv-light' as string]: pack.grounds.light.colour,
+      ['--pv-card-top' as string]: cards.top,
+      ['--pv-card-fill' as string]: cards.fill,
+      ['--pv-card-bottom' as string]: cards.bottom,
+      ['--pv-card-ring' as string]: cards.ring?.colour ?? 'transparent',
+      ['--pv-card-line' as string]: cards.ring?.colour ?? pack.palette.line,
+      ['--pv-display' as string]: `'Pick ${pack.type.display.family}'`,
+      ['--pv-display-weight' as string]: String(pack.type.display.weight),
+      ['--pv-body' as string]: `'Pick ${pack.type.body.family}'`,
+      ['--pv-mesh-a' as string]: Object.values(pack.palette.extended)[0] ?? pack.palette.win,
+      ['--pv-mesh-b' as string]: Object.values(pack.palette.extended)[1] ?? pack.palette.friction,
+    } as React.CSSProperties;
+  }, [pack]);
   const plan = useMemo(() => {
     try {
       return examplePlanFor(d.draft.base, pack, generated, footage);
@@ -208,7 +234,7 @@ export const App: React.FC = () => {
         </button>
       </header>
 
-      <aside className="panel">
+      <aside className="panel" style={panelVars} data-ground={pack.composition.ground}>
         {d.problem && <p className="note bad">O rascunho salvo não abriu ({d.problem}); o Studio começou do {base.name}.</p>}
         {SECTIONS.map((s) => (
           <section key={s.id} className={`sec ${open[s.id] ? 'open' : ''}`}>
