@@ -157,7 +157,7 @@ const ReelView: React.FC<{ plan: ReelPlan; playing: boolean }> = ({ plan, playin
   return (
     <div className="reel">
       <div className="reel-player">
-        <Player ref={ref} component={Reel} inputProps={plan} durationInFrames={total} {...SIZE} autoPlay={playing} initiallyMuted={false} controls errorFallback={Fallback} acknowledgeRemotionLicense style={{ width: '100%' }} />
+        <Player ref={ref} component={Reel} inputProps={plan} durationInFrames={total} {...SIZE} loop autoPlay={playing} initiallyMuted={false} controls errorFallback={Fallback} acknowledgeRemotionLicense style={{ width: '100%' }} />
       </div>
       <div className="reel-shots">
         <div className="reel-head">
