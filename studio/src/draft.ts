@@ -110,13 +110,16 @@ export const useDraft = () => {
 export const usePreviewRev = (draft: Draft, generated: ReelPlan | null, footage: Footage | null, delay = 250) => {
   const [rev, setRev] = useState(0);
   const timer = useRef<number | undefined>(undefined);
+  // the generator's plan arrives a moment after each change; it reaches the preview by message, not by a reload
+  const latest = useRef(generated);
+  latest.current = generated;
   useEffect(() => {
     window.clearTimeout(timer.current);
     timer.current = window.setTimeout(() => {
       const pack = draft.pack;
       let plan: unknown = null;
       try {
-        plan = examplePlanFor(draft.base, pack, generated, footage);
+        plan = examplePlanFor(draft.base, pack, latest.current, footage);
       } catch {
         plan = null;
       }
@@ -124,7 +127,7 @@ export const usePreviewRev = (draft: Draft, generated: ReelPlan | null, footage:
       setRev((r) => r + 1);
     }, delay);
     return () => window.clearTimeout(timer.current);
-  }, [draft, generated, footage, delay]);
+  }, [draft, footage, delay]);
   useEffect(() => {
     const base = SHIPPED[draft.base];
     save(COMPARE_KEY, { pack: base, hero: base.palette.heroRotation[0] ?? 'win', plan: examplePlanFor(draft.base, base, null, footage), shoot: footage?.shoot ?? null, at: footage?.at ?? 0 });

@@ -14,6 +14,25 @@ import { SECTIONS, type Affects, type Control, type Option } from './recipes';
 
 type PreviewState = { status: 'loading' | 'ready' | 'error'; message?: string };
 type Stage = 'scenes' | 'reel' | 'skill';
+/** One of the two preview iframes: the revision it holds and whether the engine in it has drawn. */
+type Buffer = { rev: number | null; src: string; ready: boolean };
+type Buffers = { a: Buffer; b: Buffer; front: 'a' | 'b' };
+
+/**
+ * The footage, fetched once and held as blob: URLs the preview iframes read (window.parent.__STYLE_PLATES__), so a
+ * preview that reloads on every change never fetches the video again.
+ */
+const PLATES: Record<string, string> = {};
+(window as unknown as { __STYLE_PLATES__?: Record<string, string> }).__STYLE_PLATES__ = PLATES;
+const holdPlate = async (plate: string) => {
+  if (!plate || PLATES[plate]) return;
+  try {
+    const r = await fetch(`/${plate}`);
+    if (r.ok) PLATES[plate] = URL.createObjectURL(await r.blob());
+  } catch {
+    // the preview falls back to the file itself
+  }
+};
 type SkillState = { files: SkillFiles | null; notes: string[]; error: string | null; loading: boolean };
 
 /** Black or white, whichever reads on a colour. */
@@ -70,6 +89,7 @@ export const App: React.FC = () => {
   }, [skill.files]);
   const rev = usePreviewRev(d.draft, generated, footage);
   const [preview, setPreview] = useState<PreviewState>({ status: 'loading' });
+  const [bufs, setBufs] = useState<Buffers>({ a: { rev: null, src: 'about:blank', ready: false }, b: { rev: null, src: 'about:blank', ready: false }, front: 'a' });
   const [stage, setStage] = useState<Stage>('scenes');
   const [playing, setPlaying] = useState(false);
   const [comparing, setComparing] = useState(false);
@@ -79,11 +99,27 @@ export const App: React.FC = () => {
   const [jsonError, setJsonError] = useState<string | null>(null);
   const [open, setOpen] = useState<Record<string, boolean>>({ type: true });
   const [server, setServer] = useState<ServerInfo | null>(null);
-  const frame = useRef<HTMLIFrameElement>(null);
+  const frameA = useRef<HTMLIFrameElement>(null);
+  const frameB = useRef<HTMLIFrameElement>(null);
+  const frameC = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     void serverInfo().then(setServer);
+    void holdPlate('footage/demo/plate.mp4');
   }, []);
+  useEffect(() => {
+    if (footage?.shoot.plate) void holdPlate(footage.shoot.plate);
+  }, [footage]);
+
+  // A new revision loads in the back iframe while the front one stays up, dimmed; they swap once it has drawn.
+  useEffect(() => {
+    if (!rev) return;
+    setBufs((s) => {
+      const back = s.front === 'a' ? 'b' : 'a';
+      return { ...s, [back]: { rev, src: `/preview.html?rev=${rev}`, ready: false } };
+    });
+    setPreview({ status: 'loading' });
+  }, [rev]);
 
   // The UI wears the draft's accent colour.
   useEffect(() => {
@@ -92,19 +128,26 @@ export const App: React.FC = () => {
     root.setProperty('--on-accent', onColour(pack.palette.win));
   }, [pack.palette.win]);
 
-  // What the preview iframe says about the latest revision.
+  // What a preview iframe says about the revision it loaded: the back one, ready, comes to the front.
   useEffect(() => {
     const on = (e: MessageEvent) => {
       if (e.origin !== location.origin || e.data?.source !== 'style-preview' || e.data.card || e.data.compare) return;
       if (String(e.data.rev) !== String(rev)) return;
-      setPreview(e.data.type === 'error' ? { status: 'error', message: e.data.message } : { status: 'ready' });
+      if (e.data.type === 'error') return setPreview({ status: 'error', message: e.data.message });
+      setBufs((s) => {
+        const back = s.front === 'a' ? 'b' : 'a';
+        if (s[back].rev !== rev) return s;
+        return { ...s, [back]: { ...s[back], ready: true }, front: back };
+      });
+      setPreview({ status: 'ready' });
     };
     window.addEventListener('message', on);
     return () => window.removeEventListener('message', on);
   }, [rev]);
-  useEffect(() => setPreview({ status: 'loading' }), [rev]);
 
-  const say = useCallback((msg: Record<string, unknown>) => frame.current?.contentWindow?.postMessage({ source: 'style-studio', ...msg }, location.origin), []);
+  const say = useCallback((msg: Record<string, unknown>) => {
+    for (const f of [frameA, frameB, frameC]) f.current?.contentWindow?.postMessage({ source: 'style-studio', ...msg }, location.origin);
+  }, []);
   useEffect(() => say({ type: 'play', on: playing }), [playing, preview.status, say]);
   useEffect(() => say({ type: 'view', view: stage === 'reel' ? 'reel' : 'scenes' }), [stage, preview.status, say]);
   const hint = useCallback((scenes: Affects | null) => say({ type: 'hint', scenes }), [say]);
@@ -191,6 +234,9 @@ export const App: React.FC = () => {
       return null;
     }
   }, [d.draft.base, pack, generated, footage]);
+  useEffect(() => {
+    if (plan) say({ type: 'plan', plan });
+  }, [plan, preview.status, say]);
 
   return (
     <div className="studio">
@@ -293,7 +339,7 @@ export const App: React.FC = () => {
               Exportar vídeo
             </button>
           )}
-          <span className={`status ${preview.status}`}>{preview.status === 'loading' ? 'Desenhando o estilo…' : preview.status === 'ready' ? 'Pronto' : 'Erro'}</span>
+          <span className={`status ${preview.status}`}>{preview.status === 'loading' ? 'Atualizando…' : preview.status === 'ready' ? 'Pronto' : 'Erro'}</span>
         </div>
         {preview.status === 'error' && stage !== 'skill' && (
           <div className="note bad stage-error">
@@ -301,8 +347,9 @@ export const App: React.FC = () => {
           </div>
         )}
         <div className={`stage-body ${stage === 'skill' ? 'skill-on' : ''}`}>
-          <iframe ref={frame} key={rev} className="preview" title="Prévia do estilo" src={`/preview.html?rev=${rev}&play=${playing ? 1 : 0}&view=${stage === 'reel' ? 'reel' : 'scenes'}`} />
-          {d.changed && <iframe className={`preview compare-frame ${comparing ? 'show' : ''}`} title={`Prévia do ${base.name}`} src={`/preview.html?compare=1&rev=${d.draft.base}-${footage ? footage.at : 'demo'}&play=0&view=${stage === 'reel' ? 'reel' : 'scenes'}`} aria-hidden={!comparing} />}
+          <iframe ref={frameA} className={`preview buffer ${bufs.front === 'a' ? 'front' : 'back'} ${preview.status === 'loading' ? 'updating' : ''}`} title="Prévia do estilo" src={bufs.a.src} aria-hidden={bufs.front !== 'a'} />
+          <iframe ref={frameB} className={`preview buffer ${bufs.front === 'b' ? 'front' : 'back'} ${preview.status === 'loading' ? 'updating' : ''}`} title="Prévia do estilo" src={bufs.b.src} aria-hidden={bufs.front !== 'b'} />
+          {d.changed && <iframe ref={frameC} className={`preview compare-frame ${comparing ? 'show' : ''}`} title={`Prévia do ${base.name}`} src={`/preview.html?compare=1&rev=${d.draft.base}-${footage ? footage.at : 'demo'}`} aria-hidden={!comparing} />}
           {comparing && <div className="compare-tag">{base.name}, como veio</div>}
           {stage === 'skill' && <SkillView pack={pack} json={packJson} skill={skill} onDownload={downloadSkill} />}
         </div>
@@ -409,6 +456,7 @@ const ControlView: React.FC<{ control: Control; pack: StylePack; edit: (fn: (p: 
           {c.options.map((o) => (
             <button key={o.id} type="button" aria-pressed={value.includes(o.id)} className={`pcard ${value.includes(o.id) ? 'on' : ''}`} onClick={() => toggle(o.id)} title={o.hint}>
               <PreviewBox option={o} />
+              {value.length > 1 && value.includes(o.id) && <span className="order">{value.indexOf(o.id) + 1}</span>}
               <span className="opt-label">{o.label}</span>
             </button>
           ))}

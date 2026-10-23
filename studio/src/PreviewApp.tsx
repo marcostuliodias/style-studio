@@ -202,9 +202,11 @@ const Preview: React.FC<{ initial: { playing: boolean; view: View; plan: ReelPla
   const [view, setView] = useState<View>(initial.view);
   const [zoom, setZoom] = useState<string | null>(null);
   const [hint, setHint] = useState<string[] | 'all' | null>(null);
+  const [plan, setPlan] = useState<ReelPlan | null>(initial.plan);
   useStudioMessages(
     React.useCallback((d) => {
       if (d.type === 'play') setPlaying(!!d.on);
+      if (d.type === 'plan' && d.plan) setPlan(d.plan as ReelPlan);
       if (d.type === 'view') {
         setView(d.view === 'reel' ? 'reel' : 'scenes');
         setZoom(null);
@@ -213,8 +215,8 @@ const Preview: React.FC<{ initial: { playing: boolean; view: View; plan: ReelPla
     }, []),
   );
   if (view === 'reel') {
-    if (!initial.plan) return <div className="preview-error"><strong>Sem plano de exemplo</strong><pre>O Studio não conseguiu montar o reel de exemplo deste estilo.</pre></div>;
-    return <ReelView plan={initial.plan} playing={playing} />;
+    if (!plan) return <div className="preview-error"><strong>Sem plano de exemplo</strong><pre>O Studio não conseguiu montar o reel de exemplo deste estilo.</pre></div>;
+    return <ReelView plan={plan} playing={playing} />;
   }
   return <Scenes playing={playing} hint={hint} zoom={zoom} onZoom={setZoom} />;
 };

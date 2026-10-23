@@ -13,6 +13,13 @@ export type Handed = { pack: StylePack; hero?: string; plan?: ReelPlan | null; s
 type W = Window & { __STYLE_PACK__?: { pack: StylePack; hero?: string }; __STYLE_SHOOT__?: unknown; __STYLE_PLATES__?: Record<string, string> };
 
 const w = window as W;
+// the footage the Studio already fetched, as blob: URLs (same origin), so this page never fetches it again
+try {
+  const held = (window.parent as unknown as W | undefined)?.__STYLE_PLATES__;
+  if (held && window.parent !== window) w.__STYLE_PLATES__ = { ...held };
+} catch {
+  // a page opened on its own has no parent to read
+}
 const q = new URLSearchParams(location.search);
 const rev = q.get('rev') ?? '0';
 const card = q.get('card');

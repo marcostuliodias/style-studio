@@ -215,7 +215,13 @@ code { font: 11px var(--mono); color: var(--muted); }
 .stage-error { margin: 10px 16px 0; }
 .stage-body { position: relative; flex: 1; min-height: 0; }
 .preview { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--bg); }
-.compare-frame { visibility: hidden; pointer-events: none; }
+.preview.buffer { transition: opacity .28s ease; }
+.preview.buffer.front { opacity: 1; z-index: 1; }
+.preview.buffer.front.updating { opacity: 0.4; }
+.preview.buffer.back { opacity: 0; z-index: 0; pointer-events: none; }
+.pcard { position: relative; }
+.pcard .order { position: absolute; top: 12px; right: 12px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px; background: var(--accent); color: var(--on-accent); font: 700 11px/18px var(--sans); text-align: center; }
+.compare-frame { visibility: hidden; pointer-events: none; z-index: 2; }
 .compare-frame.show { visibility: visible; }
 .compare-tag { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); font-weight: 700; padding: 5px 12px; border-radius: 999px; pointer-events: none; }
 .stage-body.skill-on .preview { visibility: hidden; }
