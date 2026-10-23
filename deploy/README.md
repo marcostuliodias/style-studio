@@ -79,6 +79,24 @@ ficam em volumes nomeados e são varridos pela API depois de `STUDIO_KEEP_HOURS`
 
 Para atualizar: `git pull && docker compose up -d --build`.
 
+## Opção C: uma VPS que já tem nginx nas portas 80 e 443
+
+Sem o Caddy: só o app, preso ao localhost, e o nginx do host na frente.
+
+```bash
+docker compose -f deploy/docker-compose.behind-proxy.yml up -d --build
+```
+
+```bash
+sudo cp deploy/nginx-studio.conf /etc/nginx/sites-available/studio && sudo ln -sf /etc/nginx/sites-available/studio /etc/nginx/sites-enabled/studio && sudo nginx -t && sudo systemctl reload nginx
+```
+
+```bash
+sudo certbot --nginx -d studio.marcostulio.com
+```
+
+Troque o `server_name` no arquivo pelo seu domínio. Esse Compose vem sem upload e sem exportação de vídeo.
+
 ## Testar a imagem localmente
 
 ```bash

@@ -1,0 +1,24 @@
+# The Studio on a machine that already has nginx (or another proxy) on 80/443: only the app, bound to localhost,
+# for the proxy to forward to. deploy/nginx-studio.conf is the matching nginx site.
+#   docker compose -f deploy/docker-compose.behind-proxy.yml up -d --build
+services:
+  studio:
+    build:
+      context: ..
+    restart: unless-stopped
+    environment:
+      STUDIO_HOST: 0.0.0.0
+      STUDIO_MAX_RENDERS: '1'
+      STUDIO_MAX_QUEUE: '3'
+      STUDIO_RENDER_TIMEOUT_MS: '600000'
+      STUDIO_UPLOADS: '0'
+      STUDIO_EXPORTS: '0'
+      STUDIO_KEEP_HOURS: '6'
+    ports:
+      - '127.0.0.1:3490:3490'
+    volumes:
+      - uploads:/app/public/footage/uploads
+      - renders:/app/out/studio
+volumes:
+  uploads:
+  renders:
