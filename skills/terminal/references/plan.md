@@ -11,11 +11,13 @@ types are in `src/reel/plan.ts`.
 | `pack` | `"terminal"`. It picks the pack when the plan renders. |
 | `hero` | The video's hero colour, from the rotation: `win`, `amber` or `cyan`. |
 | `title` | A name for the video (optional). |
+| `creator` | The creator, for the badge: `{ name, handle, photo? }` from `plans/perfil.json` (`photo` in `public/`). |
 | `shoot` | The edit and the face: `{ plate, width, height, faceX, crown, eyes, chin, tone }`. Paths are in `public/`; measurements in the edit's pixels; `tone` from `scripts/footage-tone.mjs`. |
 | `from` | The edit's frame the reel starts on (0 for the whole edit). |
 | `audio` | The voice: a file in `public/` lined up with the edit, played from `from`. |
 | `captions` | `[{ from, to, text }]` on the reel's timeline. |
 | `shots` | `[{ scene, frames, in?, beat?, props?, note? }]`, in order. `beat` is the kind of beat the shot belongs to (`hook`, `payoff`, `item`, `number`, `point`, `proof`, `end`), on every shot of the beat, so check-plan can hold it to Terminal's beats table; `note` says what the shot is for. Neither is rendered. |
+| `shots[].badge` | `true` shows the creator's badge (photo, @, name) over that shot: a full-frame presenter shot only, the opening and the end. |
 | `shots[].options` | `[{ scene, props, in?, why }]` (optional): alternatives for that shot, each a whole shot of the same length, for the creator to pick on the storyboard (`scripts/storyboard.mjs`). `why` is one line for the creator. The storyboard writes the pick into the shot and drops the options. |
 
 ## Timing

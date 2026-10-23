@@ -267,6 +267,42 @@
       "role": "Fundador · A empresa dele"
     }
   },
+  "print": {
+    "kind": "shared",
+    "file": "src/scenes/Print.tsx",
+    "job": "A screenshot the creator supplied (a DM, a review, a dashboard, a post) on a card of the pack's surface above the presenter in the half band, with an optional lead-in over it. The proof in someone else's pixels.",
+    "use": "Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions.",
+    "presenter": "halfBand",
+    "needsShoot": false,
+    "lane": "presenter",
+    "props": {
+      "src": {
+        "type": "string",
+        "required": true,
+        "note": "The image, in public/: one of the creator's prints from plans/perfil.json (public/prints/<file>). Pick it by its description."
+      },
+      "shape": {
+        "type": "\"phone\" | \"wide\" | \"square\"",
+        "required": false,
+        "note": "The print's shape: a phone screenshot (tall, the default), a desktop one (wide) or a square post. It sets the card's size; the image is cropped from its top to fit."
+      },
+      "lead": {
+        "type": "string",
+        "required": false,
+        "note": "A lead-in over the print, 2 to 5 words: what it is (O que ela mandou, O resultado do mês)."
+      },
+      "theme": {
+        "type": "\"dark\" | \"light\"",
+        "required": false,
+        "note": "The ground; leave it out for the pack's."
+      }
+    },
+    "example": {
+      "src": "prints/exemplo.jpg",
+      "shape": "wide",
+      "lead": "O que o painel mostrou"
+    }
+  },
   "word-pop": {
     "kind": "pack",
     "file": "src/pack-scenes/WordPop.tsx",

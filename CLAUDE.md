@@ -17,6 +17,10 @@ public/footage/<video>/plate.mp4` writes `plate.json` beside it (a time for ever
 `.whisper-python` at this root (the installer's faster-whisper environment) or any Python with faster-whisper; without
 either, `pip install -U openai-whisper` and `whisper plate.mp4 --model small --word_timestamps True --output_format json`.
 
+The creator's profile, `plans/perfil.json` (name, @, what they talk about, their photo and their prints with a line
+each), is made once with `node scripts/perfil.mjs` and read by every skill: the badge on the opening and the end, a
+print as proof, their closing line. When it isn't there yet, the skill makes it before planning the first video.
+
 Between the plan and the render, the skill opens the storyboard (`node scripts/storyboard.mjs plans/<video>.json`): a
 local page where the creator approves the plan, picks between the options a shot offers, marks cuts and says what to
 change. Wait for the creator there; never approve in their place. What they mark "always" lands in `plans/regras.json`,

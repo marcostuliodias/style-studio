@@ -136,6 +136,28 @@ A shot:
 {"scene":"quote","frames":93,"in":"wipe","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
+## print
+
+A screenshot the creator supplied (a DM, a review, a dashboard, a post) on a card of the pack's surface above the presenter in the half band, with an optional lead-in over it. The proof in someone else's pixels.
+
+**Use it for:** Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions.
+
+**In Sketch:**
+
+
+| Prop | Type | | What |
+|---|---|---|---|
+| `src` | `string` | required | The image, in public/: one of the creator's prints from plans/perfil.json (public/prints/<file>). Pick it by its description. |
+| `shape` | `"phone" \| "wide" \| "square"` |  | The print's shape: a phone screenshot (tall, the default), a desktop one (wide) or a square post. It sets the card's size; the image is cropped from its top to fit. |
+| `lead` | `string` |  | A lead-in over the print, 2 to 5 words: what it is (O que ela mandou, O resultado do mês). |
+| `theme` | `"dark" \| "light"` |  | The ground; leave it out for the pack's. |
+
+A shot:
+
+```json
+{"scene":"print","frames":105,"props":{"src":"prints/exemplo.jpg","shape":"wide","lead":"O que o painel mostrou"}}
+```
+
 ## doodle (Sketch's own)
 
 The presenter full frame with the whiteboard drawn onto the footage: a scrap of paper taped above their head with a few handwritten words (the key one on the marker), an arrow drawn from it down to the side of their head, and three strokes of emphasis by the other ear. It never crosses the face; captions run under it.

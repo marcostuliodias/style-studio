@@ -136,6 +136,28 @@ A shot:
 {"scene":"quote","frames":98,"in":"blur","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
+## print
+
+A screenshot the creator supplied (a DM, a review, a dashboard, a post) on a card of the pack's surface above the presenter in the half band, with an optional lead-in over it. The proof in someone else's pixels.
+
+**Use it for:** Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions.
+
+**In Glass:**
+
+
+| Prop | Type | | What |
+|---|---|---|---|
+| `src` | `string` | required | The image, in public/: one of the creator's prints from plans/perfil.json (public/prints/<file>). Pick it by its description. |
+| `shape` | `"phone" \| "wide" \| "square"` |  | The print's shape: a phone screenshot (tall, the default), a desktop one (wide) or a square post. It sets the card's size; the image is cropped from its top to fit. |
+| `lead` | `string` |  | A lead-in over the print, 2 to 5 words: what it is (O que ela mandou, O resultado do mês). |
+| `theme` | `"dark" \| "light"` |  | The ground; leave it out for the pack's. |
+
+A shot:
+
+```json
+{"scene":"print","frames":105,"props":{"src":"prints/exemplo.jpg","shape":"wide","lead":"O que o painel mostrou"}}
+```
+
 ## float (Glass's own)
 
 The presenter full frame with the focus pulled gently off them, soft and barely darker, while a card of the pack's surface floats up in front of them, breathing: a headline over a big number (the old one struck out beside it), or over two or three facts. The card stands on the caption lane, over the mouth and chest and never above the eye line, so the eyes stay in the shot above it; captions run under it.

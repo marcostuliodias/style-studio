@@ -34,12 +34,22 @@ Run every command from the engine's root folder (the one with `package.json` and
   footage (word-pop, captions with no box) take white or ink from it, with an edge in the opposite tone, so they read
   on any shirt. Measure it on a frame that shows the shirt as it is for most of the video.
 - **The voice**: an audio file lined up with the edit (or the edit itself, if it has sound), as the plan's `audio`.
+- **The creator's profile**, `plans/perfil.json`, made once per creator: their name and @ (`nome`, `arroba`), what
+  they talk about and to whom (`nicho`), the line they end on (`cta`), their photo (`foto`, in `public/`) and
+  their prints (`prints[]`: `file` in `public/`, `descricao`, `shape`). When the file isn't there, run
+  `node scripts/perfil.mjs` (a page opens in their browser; wait for it to finish) or, if they'd rather answer in the
+  chat, ask for the name and @ at least and write the file yourself (the photo and prints can come later).
 
 ## How you work
 
 0. **Read the creator's rules.** `plans/regras.json`, when it exists, holds what this creator has asked for
    "always" on earlier storyboards (`regras[].texto`, with the video and shot it came from). Follow each one as if
    it were written in this file; where one contradicts Ledger's rules, the creator wins, and say so in the plan's notes.
+   Read `plans/perfil.json` too, and put the creator in the plan: `creator: { name, handle, photo }` from `nome`,
+   `arroba` and `foto`; `badge: true` on the first full-frame presenter shot after the hook and on the end shot
+   (never on a title, a graphic or the band: the engine refuses it there); `nicho` shapes the words you choose, and
+   `cta` is what the end says. Where a beat is proof and one of their prints shows it (read each `descricao`),
+   carry it with the `print` scene (`src` the print's `file`, `shape` its shape) rather than a quote.
 1. **Find the beats.** Read the transcript into beats, one point each, and name each one's kind: a hook, a payoff,
    an item, a number, a point, a proof or the end ([Ledger's beats](#the-beats), below).
 2. **Pick the hero colour** (below).
@@ -67,6 +77,7 @@ Run every command from the engine's root folder (the one with `package.json` and
    - The tile: the camera in a square tile, the eye line on its upper third, with 4 px corners and a 3 px #141414 ring, the whole head inside.
    - The chart: every bar from the one axis, the one that matters in the hero colour, each value readable at its bar's end, the source under it.
    - Mid-join stills show the join (ease and wipe), not a broken or empty frame.
+   - The print: the whole card above the band, the image inside it cropped from its top and readable, its lead-in over it; the badge (where a shot has one) in the top left, the photo in a ring, the @ in the headline voice, clear of the face.
    - Each still makes its beat's point on its own.
 
    Fix the plan and render the stills again until every one reads.
@@ -98,7 +109,7 @@ Run every command from the engine's root folder (the one with `package.json` and
 | **Item** | one thing in a list (a tool, a step, a mistake) with a name and a few facts | `list` | wipe (`"in": "wipe"`) into the first and the one that matters most; the rest cut |
 | **Number** | a figure that changed or that matters: a cost, a time, a count | `chart`; else `stat` | cut |
 | **Point** | a claim or a bridge in the presenter's own words | `talk` in the half band; else `talk` in the tile or `talk` full frame | ease (`"in": "ease"`) into the first and the one that matters most; the rest cut |
-| **Proof** | someone else's words: a customer, a review, a source | `quote` | wipe (`"in": "wipe"`) |
+| **Proof** | someone else's words: a customer, a review, a source | `quote`; else `print` | wipe (`"in": "wipe"`) |
 | **End** | the last line: the follow, the next video, the takeaway | `talk` in the tile; else `talk` in the half band or `talk` full frame | cut |
 
 - Read the transcript into beats of these kinds, one point each, then give each beat Ledger's first choice. Take the next one only when the first can't carry it: the words don't fit its props, it ran in the beat before (two of the same scene back to back read as one long shot), or the pace needs a change.
@@ -132,6 +143,7 @@ Run every command from the engine's root folder (the one with `package.json` and
 | `list` | Each item of a list video (tools, steps, mistakes), when the item has a name and two to four facts worth showing. | no |
 | `stat` | A number that changed: a cost, a time, a count. The payoff of a claim. | no |
 | `quote` | Someone else's words: a customer, a review, a line from a source. | no |
+| `print` | Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions. | with a shoot: the half band |
 | `chart` (Ledger's own) | Numbers worth comparing: before and after, this against that, a ranking. The evidence behind a claim, shown rather than said. | no |
 
 - **Ledger's own: `chart`.** Numbers worth comparing: before and after, this against that, a ranking. The evidence behind a claim, shown rather than said. Use it at least once a video: without it a video reads as the shared scenes in Ledger's colours, not as Ledger.

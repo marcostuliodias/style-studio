@@ -136,6 +136,28 @@ A shot:
 {"scene":"quote","frames":85,"in":"glitch","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
+## print
+
+A screenshot the creator supplied (a DM, a review, a dashboard, a post) on a card of the pack's surface above the presenter in the half band, with an optional lead-in over it. The proof in someone else's pixels.
+
+**Use it for:** Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions.
+
+**In Terminal:**
+
+
+| Prop | Type | | What |
+|---|---|---|---|
+| `src` | `string` | required | The image, in public/: one of the creator's prints from plans/perfil.json (public/prints/<file>). Pick it by its description. |
+| `shape` | `"phone" \| "wide" \| "square"` |  | The print's shape: a phone screenshot (tall, the default), a desktop one (wide) or a square post. It sets the card's size; the image is cropped from its top to fit. |
+| `lead` | `string` |  | A lead-in over the print, 2 to 5 words: what it is (O que ela mandou, O resultado do mês). |
+| `theme` | `"dark" \| "light"` |  | The ground; leave it out for the pack's. |
+
+A shot:
+
+```json
+{"scene":"print","frames":75,"props":{"src":"prints/exemplo.jpg","shape":"wide","lead":"O que o painel mostrou"}}
+```
+
 ## word-pop (Terminal's own)
 
 Land the spoken line word by word: big words popping in over the speaker, the key word on a coloured box with a quick punch-in, a soft flash and a small shake.

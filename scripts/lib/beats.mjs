@@ -56,7 +56,7 @@ export const BEAT_KINDS = {
   item: { name: 'Item', what: 'one thing in a list (a tool, a step, a mistake) with a name and a few facts', fallback: ['command', 'list'], joins: ['zoom', 'whip', 'glitch'], recurs: true },
   number: { name: 'Number', what: 'a figure that changed or that matters: a cost, a time, a count', fallback: ['slam', 'chart', 'float', 'sticker', 'stat'], joins: ['flash', 'zoom'], recurs: true },
   point: { name: 'Point', what: 'a claim or a bridge in the presenter\'s own words', fallback: ['talk:full'], recurs: true },
-  proof: { name: 'Proof', what: 'someone else\'s words: a customer, a review, a source', fallback: ['quote'], joins: ['zoom', 'whip', 'glitch'] },
+  proof: { name: 'Proof', what: 'someone else\'s words: a customer, a review, a source', fallback: ['quote', 'print'], joins: ['zoom', 'whip', 'glitch'] },
   end: { name: 'End', what: 'the last line: the follow, the next video, the takeaway', fallback: ['talk:full'] },
 };
 

@@ -493,6 +493,7 @@ const skillMd = (pack, rel) => {
     ...r.own.filter((s) => OWN_REVIEW[s]).map((s) => OWN_REVIEW[s]),
     ...(r.joins.some((j) => j !== 'cut') ? [`Mid-join stills show the join (${and(r.joins.filter((j) => j !== 'cut').map((j) => JOIN[j]))}), not a broken or empty frame.`] : []),
     ...(pack.signature ? [`Its signature shows: ${signatureLines(pack).map((l) => l.replace(/\.$/, '').toLowerCase()).join('; ')}.`] : []),
+    ...(r.scenes.includes('print') ? ['The print: the whole card above the band, the image inside it cropped from its top and readable, its lead-in over it; the badge (where a shot has one) in the top left, the photo in a ring, the @ in the headline voice, clear of the face.'] : []),
     'Each still makes its beat\'s point on its own.',
   ];
 
@@ -641,12 +642,22 @@ Run every command from the engine's root folder (the one with \`package.json\` a
   footage (word-pop, captions with no box) take white or ink from it, with an edge in the opposite tone, so they read
   on any shirt. Measure it on a frame that shows the shirt as it is for most of the video.
 - **The voice**: an audio file lined up with the edit (or the edit itself, if it has sound), as the plan's \`audio\`.
+- **The creator's profile**, \`plans/perfil.json\`, made once per creator: their name and @ (\`nome\`, \`arroba\`), what
+  they talk about and to whom (\`nicho\`), the line they end on (\`cta\`), their photo (\`foto\`, in \`public/\`) and
+  their prints (\`prints[]\`: \`file\` in \`public/\`, \`descricao\`, \`shape\`). When the file isn't there, run
+  \`node scripts/perfil.mjs\` (a page opens in their browser; wait for it to finish) or, if they'd rather answer in the
+  chat, ask for the name and @ at least and write the file yourself (the photo and prints can come later).
 
 ## How you work
 
 0. **Read the creator's rules.** \`plans/regras.json\`, when it exists, holds what this creator has asked for
    "always" on earlier storyboards (\`regras[].texto\`, with the video and shot it came from). Follow each one as if
    it were written in this file; where one contradicts ${N}'s rules, the creator wins, and say so in the plan's notes.
+   Read \`plans/perfil.json\` too, and put the creator in the plan: \`creator: { name, handle, photo }\` from \`nome\`,
+   \`arroba\` and \`foto\`; \`badge: true\` on the first full-frame presenter shot after the hook and on the end shot
+   (never on a title, a graphic or the band: the engine refuses it there); \`nicho\` shapes the words you choose, and
+   \`cta\` is what the end says. Where a beat is proof and one of their prints shows it (read each \`descricao\`),
+   carry it with the \`print\` scene (\`src\` the print's \`file\`, \`shape\` its shape) rather than a quote.
 1. **Find the beats.** Read the transcript into beats, one point each, and name each one's kind: a hook, a payoff,
    an item, a number, a point, a proof or the end ([${N}'s beats](#the-beats), below).
 2. **Pick the hero colour** (below).
@@ -878,11 +889,13 @@ types are in \`src/reel/plan.ts\`.
 | \`pack\` | \`"${pack.id}"\`. It picks the pack when the plan renders. |
 | \`hero\` | The video's hero colour, from the rotation: ${and(pack.palette.heroRotation.map(code), 'or')}. |
 | \`title\` | A name for the video (optional). |
+| \`creator\` | The creator, for the badge: \`{ name, handle, photo? }\` from \`plans/perfil.json\` (\`photo\` in \`public/\`). |
 | \`shoot\` | The edit and the face: \`{ plate, width, height, faceX, crown, eyes, chin, tone }\`. Paths are in \`public/\`; measurements in the edit's pixels; \`tone\` from \`scripts/footage-tone.mjs\`. |
 | \`from\` | The edit's frame the reel starts on (0 for the whole edit). |
 | \`audio\` | The voice: a file in \`public/\` lined up with the edit, played from \`from\`. |
 | \`captions\` | \`[{ from, to, text }]\` on the reel's timeline. |
 | \`shots\` | \`[{ scene, frames, in?, beat?, props?, note? }]\`, in order. \`beat\` is the kind of beat the shot belongs to (\`hook\`, \`payoff\`, \`item\`, \`number\`, \`point\`, \`proof\`, \`end\`), on every shot of the beat, so check-plan can hold it to ${N}'s beats table; \`note\` says what the shot is for. Neither is rendered. |
+| \`shots[].badge\` | \`true\` shows the creator's badge (photo, @, name) over that shot: a full-frame presenter shot only, the opening and the end. |
 | \`shots[].options\` | \`[{ scene, props, in?, why }]\` (optional): alternatives for that shot, each a whole shot of the same length, for the creator to pick on the storyboard (\`scripts/storyboard.mjs\`). \`why\` is one line for the creator. The storyboard writes the pick into the shot and drops the options. |
 
 ## Timing

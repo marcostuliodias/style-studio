@@ -8,11 +8,13 @@ import { overFootage } from '../kit/contrast';
 import { BackdropTurn } from '../kit/Ground';
 import { BAND } from '../kit/Presenter';
 import { rng, tornEdge } from '../kit/rough';
+import { Badge } from '../kit/Badge';
 import { groundOf } from '../kit/tones';
 import { PACK_SCENES } from '../pack-scenes';
 import { ListItem } from '../scenes/ListItem';
 import { QuoteCard } from '../scenes/QuoteCard';
 import { StatCompare } from '../scenes/StatCompare';
+import { Print } from '../scenes/Print';
 import { Talk } from '../scenes/Talk';
 import { TitleStack } from '../scenes/TitleStack';
 import { checkPlan, joinFrames, SCENE_DEFS, shotStarts, type Join, type ReelPlan, type SceneId } from './plan';
@@ -26,6 +28,7 @@ const COMPONENTS = {
   list: ListItem,
   stat: StatCompare,
   quote: QuoteCard,
+  print: Print,
   ...Object.fromEntries(Object.entries(PACK_SCENES).map(([id, s]) => [id, s.component])),
 } as Record<SceneId, React.FC<any>>;
 
@@ -182,6 +185,7 @@ export const Reel: React.FC<ReelPlan> = (plan) => {
             <BackdropTurn.Provider value={turns[i]}>
               <ShotFrame join={s.in ?? 'cut'} next={next} frames={s.frames}>
                 <Scene {...s.props} {...presenter} />
+                {s.badge && plan.creator && <Badge creator={plan.creator} />}
               </ShotFrame>
             </BackdropTurn.Provider>
           </Sequence>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Seu perfil</title>
+<style>
+  :root { --hero: #FFE600; --bg: #0e0e11; --panel: #16161b; --line: #2a2a32; --text: #f2f2f5; --soft: #a6a6b2; --warn: #ff5a5a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 -apple-system, "Segoe UI", Inter, Roboto, sans-serif; padding-bottom: 96px; }
+  header { padding: 22px 28px 10px; }
+  header h1 { font-size: 22px; margin: 0 0 6px; }
+  header p { margin: 0; color: var(--soft); max-width: 720px; }
+  main { padding: 10px 28px; max-width: 860px; }
+  h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--soft); margin: 28px 0 10px; font-weight: 600; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .row { grid-template-columns: 1fr; } }
+  label.f { display: block; }
+  label.f span { display: block; font-size: 13px; color: var(--soft); margin-bottom: 5px; }
+  input[type=text], textarea { width: 100%; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 10px; font: inherit; font-size: 15px; }
+  textarea { min-height: 76px; resize: vertical; }
+  input:focus, textarea:focus { outline: none; border-color: var(--hero); }
+  .foto { display: flex; gap: 16px; align-items: center; }
+  .foto img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; background: #000; box-shadow: 0 0 0 3px var(--hero); }
+  .foto .none { width: 96px; height: 96px; border-radius: 50%; border: 1px dashed var(--line); display: grid; place-items: center; color: var(--soft); font-size: 12px; text-align: center; }
+  button.b { border: 1px solid var(--line); background: var(--panel); color: var(--text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+  button.b:hover { border-color: var(--soft); }
+  .prints { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .print { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+  .print img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: top; border-radius: 8px; background: #000; }
+  .print .x { align-self: flex-end; background: none; border: 0; color: var(--soft); cursor: pointer; font-size: 13px; }
+  .drop { border: 1px dashed var(--line); border-radius: 12px; padding: 22px; text-align: center; color: var(--soft); cursor: pointer; margin-top: 12px; }
+  .drop:hover, .drop.over { border-color: var(--hero); color: var(--text); }
+  footer { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(14,14,17,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 14px 28px; display: flex; gap: 12px; align-items: center; }
+  footer .grow { flex: 1; color: var(--warn); font-size: 13px; }
+  button.primary { background: var(--hero); color: #000; border: 0; font-weight: 800; padding: 12px 22px; border-radius: 10px; cursor: pointer; font-size: 15px; }
+  button.primary:disabled { opacity: .5; }
+  .done { padding: 80px 28px; text-align: center; }
+  .done h1 { font-size: 28px; }
+  .done p { color: var(--soft); font-size: 17px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Seu perfil</h1>
+  <p>Preencha uma vez. O Claude usa isso em todos os seus vídeos: o selo com sua foto e seu @ na abertura e no fim, os prints como prova, e o jeito que você fecha.</p>
+</header>
+<main>
+  <h2>Quem é você</h2>
+  <div class="row">
+    <label class="f"><span>Nome como aparece no vídeo</span><input type="text" id="nome" placeholder="Marcos Tulio"></label>
+    <label class="f"><span>Seu @ (Instagram, TikTok)</span><input type="text" id="arroba" placeholder="@marcostulio"></label>
+  </div>
+  <label class="f" style="margin-top:14px"><span>Sobre o que você fala, e para quem</span><textarea id="nicho" placeholder="Ex.: ensino criadores a usar IA para produzir mais conteúdo com menos tempo; falo para quem grava sozinho e edita sozinho."></textarea></label>
+  <div class="row" style="margin-top:14px">
+    <label class="f"><span>Como você costuma fechar o vídeo (o pedido do fim)</span><input type="text" id="cta" placeholder="Me segue que amanhã tem mais / Link na bio"></label>
+    <label class="f"><span>Site ou link (opcional)</span><input type="text" id="site" placeholder="marcostulio.com"></label>
+  </div>
+
+  <h2>Sua foto</h2>
+  <div class="foto">
+    <div id="fotoBox"><div class="none">sem foto</div></div>
+    <div>
+      <button class="b" id="fotoBtn">Escolher foto</button>
+      <button class="b" id="fotoRm" style="display:none">Tirar</button>
+      <input type="file" id="fotoIn" accept="image/png,image/jpeg,image/webp" hidden>
+      <p style="color:var(--soft);font-size:13px;margin:8px 0 0">Rosto bem enquadrado, quadrada se puder. Vira um círculo pequeno no selo.</p>
+    </div>
+  </div>
+
+  <h2>Seus prints</h2>
+  <p style="color:var(--soft);margin:0 0 10px">Mensagens de clientes, avaliações, resultados, posts que foram bem. Escreva o que cada um mostra: é assim que o Claude escolhe qual usar em cada vídeo.</p>
+  <div class="prints" id="prints"></div>
+  <div class="drop" id="drop">Arraste prints aqui, ou clique para escolher (PNG, JPG, WebP; pode ser vários)</div>
+  <input type="file" id="printsIn" accept="image/png,image/jpeg,image/webp" multiple hidden>
+</main>
+<footer>
+  <span class="grow" id="erro"></span>
+  <button class="primary" id="salvar">Salvar perfil</button>
+</footer>
+<script type="module">
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const D = await (await fetch('/dados')).json();
+const state = { foto: D.foto ? { file: D.foto } : null, prints: D.prints.map((p) => ({ file: p.file, descricao: p.descricao ?? '' })) };
+for (const k of ['nome', 'arroba', 'nicho', 'cta', 'site']) $('#' + k).value = D[k] ?? '';
+if (D.arroba && !D.arroba.startsWith('@')) $('#arroba').value = '@' + D.arroba;
+
+const toUpload = (f) => new Promise((resolve) => { const r = new FileReader(); r.onload = () => resolve({ name: f.name, data: r.result.split(',')[1], url: r.result }); r.readAsDataURL(f); });
+
+const drawFoto = () => {
+  const src = state.foto?.url ?? (state.foto?.file ? '/public/' + state.foto.file : null);
+  $('#fotoBox').innerHTML = src ? `<img src="${src}">` : '<div class="none">sem foto</div>';
+  $('#fotoRm').style.display = src ? '' : 'none';
+};
+$('#fotoBtn').onclick = () => $('#fotoIn').click();
+$('#fotoIn').onchange = async () => { if ($('#fotoIn').files[0]) { state.foto = await toUpload($('#fotoIn').files[0]); drawFoto(); } };
+$('#fotoRm').onclick = () => { state.foto = null; drawFoto(); };
+drawFoto();
+
+const drawPrints = () => {
+  const box = $('#prints');
+  box.innerHTML = '';
+  state.prints.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'print';
+    const src = p.url ?? '/public/' + p.file;
+    el.innerHTML = `<img src="${src}"><textarea placeholder="O que este print mostra? Ex.: cliente dizendo que fechou 3 vendas na primeira semana">${esc(p.descricao)}</textarea><button class="x">tirar</button>`;
+    el.querySelector('textarea').oninput = (e) => (p.descricao = e.target.value);
+    el.querySelector('.x').onclick = () => { state.prints.splice(i, 1); drawPrints(); };
+    box.appendChild(el);
+  });
+};
+const addFiles = async (files) => { for (const f of files) if (f.type.startsWith('image/')) state.prints.push({ upload: await toUpload(f), descricao: '' }); drawPrints(); };
+$('#drop').onclick = () => $('#printsIn').click();
+$('#printsIn').onchange = () => addFiles([...$('#printsIn').files]);
+$('#drop').ondragover = (e) => { e.preventDefault(); $('#drop').classList.add('over'); };
+$('#drop').ondragleave = () => $('#drop').classList.remove('over');
+$('#drop').ondrop = (e) => { e.preventDefault(); $('#drop').classList.remove('over'); addFiles([...e.dataTransfer.files]); };
+drawPrints();
+
+$('#salvar').onclick = async () => {
+  const nome = $('#nome').value.trim(), arroba = $('#arroba').value.trim();
+  if (!nome || !arroba) { $('#erro').textContent = 'Nome e @ são obrigatórios.'; return; }
+  $('#erro').textContent = '';
+  $('#salvar').disabled = true;
+  const payload = {
+    nome, arroba, nicho: $('#nicho').value, cta: $('#cta').value, site: $('#site').value,
+    foto: state.foto?.data ? { name: state.foto.name, data: state.foto.data } : state.foto ? undefined : null,
+    prints: state.prints.map((p) => ({ file: p.file, upload: p.upload ? { name: p.upload.name, data: p.upload.data } : undefined, descricao: p.descricao })),
+  };
+  const r = await fetch('/salvar', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+  if (!r.ok) { $('#erro').textContent = (await r.json()).erro ?? 'não deu para salvar'; $('#salvar').disabled = false; return; }
+  document.body.innerHTML = '<div class="done"><h1>Perfil salvo!</h1><p>Pode fechar esta aba e voltar para a conversa.</p></div>';
+};
+</script>
+</body>
+</html>

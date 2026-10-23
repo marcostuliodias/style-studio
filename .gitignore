@@ -9,3 +9,8 @@ dist-studio/
 # the installer notes here which Python has faster-whisper
 .whisper-python
 .DS_Store
+
+# the creator's own files: prints and the profile photo (the example print ships)
+public/prints/*
+!public/prints/exemplo.jpg
+public/perfil/

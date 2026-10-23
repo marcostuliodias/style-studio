@@ -136,6 +136,28 @@ A shot:
 {"scene":"quote","frames":98,"in":"wipe","props":{"lines":["Faturar tomava minha","sexta inteira. Agora","roda de madrugada."],"name":"Nome do cliente","role":"Fundador · A empresa dele"}}
 ```
 
+## print
+
+A screenshot the creator supplied (a DM, a review, a dashboard, a post) on a card of the pack's surface above the presenter in the half band, with an optional lead-in over it. The proof in someone else's pixels.
+
+**Use it for:** Proof the creator has a print of: a client's message, a review, a result on a dashboard, a post that did well. One print per shot; the words about it stay in the captions.
+
+**In Ledger:**
+
+
+| Prop | Type | | What |
+|---|---|---|---|
+| `src` | `string` | required | The image, in public/: one of the creator's prints from plans/perfil.json (public/prints/<file>). Pick it by its description. |
+| `shape` | `"phone" \| "wide" \| "square"` |  | The print's shape: a phone screenshot (tall, the default), a desktop one (wide) or a square post. It sets the card's size; the image is cropped from its top to fit. |
+| `lead` | `string` |  | A lead-in over the print, 2 to 5 words: what it is (O que ela mandou, O resultado do mês). |
+| `theme` | `"dark" \| "light"` |  | The ground; leave it out for the pack's. |
+
+A shot:
+
+```json
+{"scene":"print","frames":120,"props":{"src":"prints/exemplo.jpg","shape":"wide","lead":"O que o painel mostrou"}}
+```
+
 ## chart (Ledger's own)
 
 An editorial chart on the page: a lead-in and a headline, a hairline rule drawn across, then two to five bars drawn in one after another from a hairline axis, each value counting up at its bar's end, the bar that matters in the hero colour, and a source line. Graphic only.

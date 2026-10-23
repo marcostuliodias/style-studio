@@ -1,5 +1,6 @@
 import type { BeatKind, JoinKind, StylePack } from '../engine/pack';
 import { ICON_NAMES } from '../kit/Icon';
+import type { Creator } from '../kit/Badge';
 import type { Shoot } from '../kit/Presenter';
 import SCENES from './scenes.json';
 
@@ -38,6 +39,8 @@ export type Shot = {
   note?: string;
   /** The kind of beat the shot belongs to (the pack's `scenes.beats`), so check-plan can hold it to the style. Not rendered. */
   beat?: BeatKind;
+  /** Show the creator's badge (the plan's `creator`) over this shot: a full-frame presenter shot, the opening or the end. */
+  badge?: boolean;
 };
 
 /** A caption line on the reel's timeline. `*word*` marks the key word. */
@@ -48,6 +51,8 @@ export type ReelPlan = {
   /** The video's hero colour: a name from the pack's palette, or a hex. */
   hero?: string;
   title?: string;
+  /** The creator, for the badge: name, @, and their photo in public/ (from plans/perfil.json). */
+  creator?: Creator;
   /** The edit the presenter comes from, with the face measured in its pixels. */
   shoot?: Shoot;
   /** The edit's frame the reel starts on. */
@@ -101,6 +106,11 @@ export const checkPlan = (plan: ReelPlan, pack: StylePack): ReelPlan => {
     // an icon the set doesn't have would come out as a stand-in, not as the one asked for
     if (props.icon != null && !ICON_NAMES.includes(props.icon as string)) problems.push(`${at}: no icon "${props.icon}" (icons: ${ICON_NAMES.join(', ')})`);
     if (def.needsShoot && !plan.shoot) problems.push(`${at}: shows the presenter, so the plan needs a shoot`);
+    if (s.badge) {
+      if (!plan.creator?.handle) problems.push(`${at}: shows the badge, so the plan needs a creator (name and handle)`);
+      const full = def.presenter === 'full' || (def.presenter === 'layout' && props.layout === 'full');
+      if (!full) problems.push(`${at}: the badge goes on a full-frame presenter shot only`);
+    }
     const join = s.in ?? 'cut';
     if (!JOINS.includes(join)) problems.push(`${at}: no such join "${join}" (${JOINS.join(', ')})`);
     else if (!joinOn(join, pack)) problems.push(`${at}: joins with "${join}", which the ${pack.name} pack has off`);
