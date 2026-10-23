@@ -15,6 +15,7 @@
 //   STUDIO_MAX_UPLOAD_MB=400      an upload bigger than this is refused
 //   STUDIO_MAX_FOOTAGE_SECONDS=600    a clip longer than this is refused after conversion
 //   STUDIO_UPLOADS=1              0 turns uploads off (the demo footage only)
+//   STUDIO_EXPORTS=1              0 turns video export off (the skill and the live preview only)
 //   STUDIO_KEEP_HOURS=6           uploads and renders older than this are swept
 import { execFile, spawn } from 'node:child_process';
 import crypto from 'node:crypto';
@@ -32,6 +33,7 @@ export const LIMITS = {
   maxUploadMb: Math.max(1, num('STUDIO_MAX_UPLOAD_MB', 400)),
   maxFootageSeconds: Math.max(5, num('STUDIO_MAX_FOOTAGE_SECONDS', 600)),
   uploads: process.env.STUDIO_UPLOADS !== '0',
+  exports: process.env.STUDIO_EXPORTS !== '0',
   keepHours: Math.max(0.1, num('STUDIO_KEEP_HOURS', 6)),
 };
 /** Uploads land here, inside public/ so the engine's staticFile() and the render's bundle both find them. */
@@ -212,6 +214,7 @@ const health = (res) =>
   json(res, 200, {
     ok: true,
     uploads: LIMITS.uploads,
+    exports: LIMITS.exports,
     maxUploadMb: LIMITS.maxUploadMb,
     maxFootageSeconds: LIMITS.maxFootageSeconds,
     keepHours: LIMITS.keepHours,
@@ -269,6 +272,7 @@ const pump = () => {
 };
 
 const startRender = async (req, res) => {
+  if (!LIMITS.exports) throw new HttpError(403, 'Este Studio não exporta vídeo: baixe o skill e renderize com o engine na sua máquina.');
   const { pack, plan } = await readJson(req);
   checkPack(pack);
   if (!plan || typeof plan !== 'object' || !Array.isArray(plan.shots)) throw new HttpError(400, 'Mande o plano do reel como um objeto JSON com shots');

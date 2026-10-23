@@ -25,10 +25,12 @@ Esse vídeo aparece para todo mundo que abrir o site, então use um seu ou um de
 | `STUDIO_MAX_UPLOAD_MB` | 400 | tamanho máximo de um upload |
 | `STUDIO_MAX_FOOTAGE_SECONDS` | 600 | duração máxima de um clipe enviado |
 | `STUDIO_UPLOADS` | 1 | `0` desliga o upload (o site mostra só o demo) |
+| `STUDIO_EXPORTS` | 1 | `0` desliga a exportação de vídeo (o site só mostra a prévia e entrega o skill) |
 | `STUDIO_KEEP_HOURS` | 6 | uploads e renders mais velhos que isso são apagados |
 
-Com `STUDIO_UPLOADS=0` o botão "Usar meu footage" some da interface. É a opção mais barata e segura para uma demo
-pública: ninguém grava nada no servidor e o render só usa o demo.
+Com `STUDIO_UPLOADS=0` o botão "Usar meu footage" some da interface; com `STUDIO_EXPORTS=0` some o "Exportar vídeo".
+Os dois desligados é a demo mais barata e segura: o servidor só serve a prévia e escreve o skill (segundos de CPU),
+e o render de verdade acontece na máquina de quem baixou o skill. O `docker-compose.yml` já vem sem upload.
 
 ## Opção A: Fly.io (HTTPS e domínio prontos)
 

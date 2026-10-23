@@ -11,7 +11,9 @@ services:
       STUDIO_RENDER_TIMEOUT_MS: '600000'
       STUDIO_MAX_UPLOAD_MB: '400'
       STUDIO_MAX_FOOTAGE_SECONDS: '600'
-      STUDIO_UPLOADS: '1'
+      # a public demo: nobody uploads footage, and video export stays on only if the machine can take it
+      STUDIO_UPLOADS: '0'
+      STUDIO_EXPORTS: '1'
       STUDIO_KEEP_HOURS: '6'
     volumes:
       - uploads:/app/public/footage/uploads

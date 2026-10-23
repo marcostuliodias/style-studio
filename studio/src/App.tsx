@@ -262,7 +262,7 @@ export const App: React.FC = () => {
               {footage ? footage.name : 'Usar meu footage'}
             </button>
           )}
-          {stage === 'reel' && (
+          {stage === 'reel' && (server?.exports ?? true) && (
             <button type="button" onClick={() => setModal('export')} disabled={!plan} title="Renderiza o reel de exemplo em 1080x1920 com o engine">
               Exportar vídeo
             </button>

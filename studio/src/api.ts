@@ -6,7 +6,7 @@ import type { ReelPlan } from '../../src/reel/plan';
 
 export type SkillFiles = Record<string, string>;
 export type RenderJob = { status: 'queued' | 'rendering' | 'done' | 'error'; position?: number; progress: number; log: string[]; url: string | null; error: string | null };
-export type ServerInfo = { ok: boolean; uploads: boolean; maxUploadMb: number; maxFootageSeconds: number; keepHours: number; queue: { active: number; waiting: number; max: number; maxWaiting: number } };
+export type ServerInfo = { ok: boolean; uploads: boolean; exports: boolean; maxUploadMb: number; maxFootageSeconds: number; keepHours: number; queue: { active: number; waiting: number; max: number; maxWaiting: number } };
 
 /** What this server allows; null when it isn't answering (the API isn't running). */
 export const serverInfo = async (): Promise<ServerInfo | null> => {
