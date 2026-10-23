@@ -225,11 +225,16 @@ export const mount = (root: HTMLElement, opts: { playing: boolean; view: View; p
   createRoot(root).render(<Preview initial={opts} />);
 };
 
-/** One still of the title scene, for a gallery card. */
+/** Three stills (the title, a list item, a before/after) side by side, for a gallery card. */
 export const mountCard = (root: HTMLElement) => {
+  document.documentElement.classList.add('card-page');
   createRoot(root).render(
-    <div className="card-still">
-      <Thumbnail component={Board.BoardTitle} frameToDisplay={STILL} durationInFrames={FRAMES} {...SIZE} style={{ width: '100%' }} errorFallback={Fallback} />
+    <div className="card-stills">
+      {[Board.BoardTitle, Board.BoardList, Board.BoardStat].map((C, i) => (
+        <div key={i} className="card-still">
+          <Thumbnail component={C} frameToDisplay={STILL} durationInFrames={FRAMES} {...SIZE} style={{ width: '100%' }} errorFallback={Fallback} />
+        </div>
+      ))}
     </div>,
   );
 };
