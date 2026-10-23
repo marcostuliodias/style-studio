@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Storyboard</title>
+<style>
+  :root { --hero: #FFE600; --bg: #0e0e11; --panel: #16161b; --line: #2a2a32; --text: #f2f2f5; --soft: #a6a6b2; --ok: #3ddc84; --warn: #ff5a5a; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 -apple-system, "Segoe UI", Inter, Roboto, sans-serif; padding-bottom: 96px; }
+  header { display: flex; align-items: baseline; gap: 16px; padding: 18px 28px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1 { font-size: 20px; margin: 0; }
+  header .meta { color: var(--soft); }
+  header .meta b { color: var(--hero); font-weight: 600; }
+  main { display: grid; grid-template-columns: minmax(300px, 420px) 1fr; gap: 24px; padding: 24px 28px; align-items: start; }
+  @media (max-width: 1000px) { main { grid-template-columns: 1fr; } }
+  section.watch { position: sticky; top: 16px; }
+  h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--soft); margin: 0 0 10px; font-weight: 600; }
+  .player { background: #000; border-radius: 12px; overflow: hidden; position: relative; }
+  .player video { width: 100%; display: block; max-height: 52vh; }
+  .caption { position: absolute; left: 0; right: 0; bottom: 10px; text-align: center; pointer-events: none; }
+  .caption span { display: inline-block; background: rgba(0,0,0,.65); padding: 4px 10px; border-radius: 6px; font-weight: 700; text-transform: uppercase; font-size: 15px; }
+  .caption em { font-style: normal; color: var(--hero); }
+  .strip { display: flex; gap: 2px; margin-top: 10px; height: 34px; }
+  .strip button { flex: 1 1 0; min-width: 0; border: 0; border-radius: 4px; background: var(--line); color: var(--soft); font-size: 11px; cursor: pointer; padding: 0; overflow: hidden; }
+  .strip button.on { background: var(--hero); color: #000; font-weight: 700; }
+  .tools { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+  button.b { border: 1px solid var(--line); background: var(--panel); color: var(--text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 14px; }
+  button.b:hover { border-color: var(--soft); }
+  button.b.warn { border-color: #5a2a2a; }
+  .time { color: var(--soft); font-variant-numeric: tabular-nums; margin-left: auto; }
+  .cortes { margin-top: 12px; display: grid; gap: 6px; }
+  .corte { display: flex; gap: 6px; align-items: center; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; font-size: 13px; }
+  .corte input { width: 64px; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 3px 5px; font-size: 13px; }
+  .corte .k { color: var(--warn); font-weight: 600; min-width: 92px; }
+  .corte .x { margin-left: auto; background: none; border: 0; color: var(--soft); cursor: pointer; font-size: 16px; }
+  .regras { margin-top: 20px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 13px; color: var(--soft); }
+  .regras ul { margin: 6px 0 0; padding-left: 18px; }
+  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .shot { align-self: start; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .shot.on { border-color: var(--hero); box-shadow: 0 0 0 1px var(--hero); }
+  .shot .head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .shot .n { background: var(--hero); color: #000; font-weight: 800; border-radius: 6px; padding: 1px 7px; font-size: 13px; }
+  .shot .kind { font-weight: 600; }
+  .shot .t { color: var(--soft); font-size: 13px; margin-left: auto; }
+  .shot .note { color: var(--soft); font-size: 13px; margin: 0; }
+  .opts { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+  .opt { flex: 0 0 auto; width: 128px; cursor: pointer; border: 2px solid transparent; border-radius: 10px; padding: 4px; background: var(--bg); }
+  .opt.on { border-color: var(--hero); }
+  .opt img { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 6px; display: block; background: #000; }
+  .opt .why { font-size: 11px; color: var(--soft); margin-top: 4px; line-height: 1.3; }
+  .opt .why b { color: var(--text); font-weight: 600; display: block; }
+  .opt .miss { aspect-ratio: 9 / 16; display: grid; place-items: center; color: var(--warn); font-size: 11px; text-align: center; padding: 6px; border-radius: 6px; border: 1px dashed var(--warn); }
+  .one { display: block; }
+  .one img { width: 100%; aspect-ratio: 9 / 16; object-fit: contain; border-radius: 8px; background: #000; cursor: pointer; }
+  textarea { width: 100%; min-height: 54px; resize: vertical; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 8px; padding: 8px; font: inherit; font-size: 14px; }
+  textarea:focus, .corte input:focus { outline: none; border-color: var(--hero); }
+  label.sempre { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--soft); cursor: pointer; }
+  label.sempre input { accent-color: var(--hero); }
+  .geral { margin-top: 20px; }
+  footer { position: fixed; left: 0; right: 0; bottom: 0; background: rgba(14,14,17,.92); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding: 14px 28px; display: flex; gap: 12px; align-items: center; }
+  footer .sum { color: var(--soft); font-size: 13px; }
+  footer .grow { flex: 1; }
+  button.primary { background: var(--hero); color: #000; border: 0; font-weight: 800; padding: 12px 22px; border-radius: 10px; cursor: pointer; font-size: 15px; }
+  button.primary:disabled { opacity: .5; cursor: default; }
+  .done { padding: 80px 28px; text-align: center; }
+  .done h1 { font-size: 28px; }
+  .done p { color: var(--soft); font-size: 17px; }
+  .zoom { position: fixed; inset: 0; background: rgba(0,0,0,.9); display: grid; place-items: center; z-index: 10; cursor: zoom-out; }
+  .zoom img { max-height: 94vh; max-width: 94vw; border-radius: 8px; }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="titulo">Storyboard</h1>
+  <div class="meta" id="meta"></div>
+</header>
+<main>
+  <section class="watch">
+    <h2>Assista o corte</h2>
+    <div class="player">
+      <video id="video" controls playsinline preload="metadata"></video>
+      <div class="caption" id="caption"></div>
+    </div>
+    <div class="strip" id="strip" title="Os planos do vídeo. Clique para ir até um."></div>
+    <div class="tools">
+      <button class="b warn" id="mErro" title="Marca o trecho que está tocando para ser cortado">✂ Erro de fala</button>
+      <button class="b warn" id="mResp" title="Marca a respiração que está tocando para ser cortada">✂ Respiração</button>
+      <span class="time" id="tempo">0.0 s</span>
+    </div>
+    <div class="cortes" id="cortes"></div>
+    <div class="regras" id="regras"></div>
+  </section>
+  <section>
+    <h2>Os planos, um a um</h2>
+    <div class="shots" id="shots"></div>
+    <div class="geral">
+      <h2>Mais alguma coisa sobre o vídeo todo?</h2>
+      <textarea id="notas" placeholder="Ex.: as legendas estão muito rápidas; coloca meu @ na abertura; a cor amarela cansa."></textarea>
+      <label class="sempre" style="margin-top:6px"><input type="checkbox" id="notasSempre"> Vale para todos os meus vídeos (vira regra)</label>
+    </div>
+  </section>
+</main>
+<footer>
+  <span class="sum" id="sum"></span>
+  <span class="grow"></span>
+  <button class="b" id="mudar">Pedir mudanças</button>
+  <button class="primary" id="aprovar">Aprovar e enviar</button>
+</footer>
+<script type="module">
+const SCENE = { title: 'Título', talk: 'Apresentador', list: 'Lista', stat: 'Número', quote: 'Citação', 'word-pop': 'Palavras', slam: 'Slam', chart: 'Gráfico', doodle: 'Rabisco', command: 'Comando', float: 'Flutuante', sticker: 'Figurinhas' };
+const LAYOUT = { full: 'tela cheia', halfBand: 'meia faixa', tile: 'quadro' };
+const JOIN = { cut: 'corte', ease: 'suave', zoom: 'zoom', flash: 'flash', wipe: 'varredura', blur: 'desfoque', glitch: 'glitch', whip: 'chicote' };
+const BEAT = { hook: 'gancho', payoff: 'entrega', item: 'item', number: 'número', point: 'ponto', proof: 'prova', end: 'fim' };
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const sec = (f, D) => (f / D.fps).toFixed(1) + ' s';
+const state = { escolhas: {}, cortes: [], ajustes: {} };
+
+const D = await (await fetch('/dados')).json();
+document.documentElement.style.setProperty('--hero', D.hero);
+$('#titulo').textContent = D.titulo;
+$('#meta').innerHTML = `estilo <b>${esc(D.estilo)}</b> · ${D.shots.length} planos · ${sec(D.total, D)}`;
+document.title = `Storyboard · ${D.titulo}`;
+
+// ── the cut ──
+const video = $('#video');
+const t0 = D.from / D.fps, t1 = (D.from + D.total) / D.fps;
+if (D.plate) { video.src = D.plate; video.addEventListener('loadedmetadata', () => { video.currentTime = t0; }); }
+else { $('.player').innerHTML = '<p style="padding:30px;color:var(--soft)">Este plano não tem vídeo do apresentador (só gráficos).</p>'; }
+const reelFrame = () => Math.max(0, Math.round((video.currentTime - t0) * D.fps));
+const shotAt = (f) => { let i = 0; while (i + 1 < D.shots.length && D.shots[i + 1].start <= f) i++; return i; };
+const strip = $('#strip');
+D.shots.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.style.flexGrow = s.frames; b.textContent = s.n; b.title = `Plano ${s.n}: ${SCENE[s.scene] ?? s.scene}`;
+  b.onclick = () => { video.currentTime = t0 + s.start / D.fps; video.play(); };
+  strip.appendChild(b);
+});
+let lastShot = -1;
+const tick = () => {
+  const f = reelFrame();
+  if (video.currentTime >= t1 - 0.02 && !video.paused) video.pause();
+  $('#tempo').textContent = `${Math.max(0, video.currentTime - t0).toFixed(1)} s`;
+  const c = D.captions.find((x) => f >= x.from && f < x.to);
+  $('#caption').innerHTML = c ? `<span>${esc(c.text).replace(/\*([^*]+)\*/g, '<em>$1</em>')}</span>` : '';
+  const i = shotAt(f);
+  if (i !== lastShot) {
+    lastShot = i;
+    [...strip.children].forEach((b, j) => b.classList.toggle('on', j === i));
+    document.querySelectorAll('.shot').forEach((el, j) => el.classList.toggle('on', j === i));
+  }
+  requestAnimationFrame(tick);
+};
+requestAnimationFrame(tick);
+
+// ── cuts ──
+const addCorte = (tipo) => {
+  if (!D.plate) return;
+  const t = video.currentTime;
+  state.cortes.push({ tipo, from: Math.max(0, +(t - 0.6).toFixed(2)), to: +(t + 0.4).toFixed(2) });
+  video.pause();
+  drawCortes();
+};
+$('#mErro').onclick = () => addCorte('erro de fala');
+$('#mResp').onclick = () => addCorte('respiração');
+function drawCortes() {
+  const box = $('#cortes');
+  box.innerHTML = state.cortes.length ? '' : '';
+  state.cortes.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'corte';
+    el.innerHTML = `<span class="k">✂ ${esc(c.tipo)}</span> de <input type="number" step="0.1" min="0" value="${c.from}"> a <input type="number" step="0.1" min="0" value="${c.to}"> s <button class="b" style="padding:3px 8px;font-size:12px">ouvir</button><button class="x" title="tirar">×</button>`;
+    const [a, b] = el.querySelectorAll('input');
+    a.onchange = () => (c.from = +a.value); b.onchange = () => (c.to = +b.value);
+    el.querySelector('button.b').onclick = () => { video.currentTime = c.from; video.play(); const stop = () => { if (video.currentTime >= c.to) { video.pause(); video.removeEventListener('timeupdate', stop); } }; video.addEventListener('timeupdate', stop); };
+    el.querySelector('.x').onclick = () => { state.cortes.splice(i, 1); drawCortes(); };
+    box.appendChild(el);
+  });
+  summary();
+}
+
+// ── rules already learned ──
+$('#regras').innerHTML = D.regras.length
+  ? `<b>O que já sei sobre você</b> (${D.regras.length} regra${D.regras.length > 1 ? 's' : ''}):<ul>${D.regras.map((r) => `<li>${esc(r.texto)}</li>`).join('')}</ul>`
+  : '<b>Regras</b>: ainda não aprendi nenhuma. Marque "sempre" num ajuste para eu lembrar nos próximos vídeos.';
+
+// ── shots ──
+const shots = $('#shots');
+D.shots.forEach((s, i) => {
+  const el = document.createElement('div');
+  el.className = 'shot';
+  const kind = `${SCENE[s.scene] ?? s.scene}${s.layout ? ` · ${LAYOUT[s.layout] ?? s.layout}` : ''}`;
+  const entra = s.in !== 'cut' ? ` · entra com ${JOIN[s.in] ?? s.in}` : '';
+  const beat = s.beat ? ` · ${BEAT[s.beat] ?? s.beat}` : '';
+  const thumb = (still, erro, label) => still ? `<img src="${still}" alt="${esc(label)}">` : `<div class="miss">${esc(erro ?? 'sem imagem')}</div>`;
+  el.innerHTML = `<div class="head"><span class="n">${s.n}</span><span class="kind">${esc(kind)}</span><span class="t">${sec(s.start, D)} → ${sec(s.start + s.frames, D)}${esc(entra)}${esc(beat)}</span></div>`
+    + (s.note ? `<p class="note">${esc(s.note)}</p>` : '')
+    + (s.options.length
+      ? `<div class="opts">${[{ still: s.still, erro: s.erro, scene: s.scene, why: 'Como planejado' }, ...s.options].map((o, k) => `<div class="opt${k === 0 ? ' on' : ''}" data-k="${k}">${thumb(o.still, o.erro, o.why)}<div class="why"><b>${k === 0 ? 'Como planejado' : `Opção ${k}: ${esc(SCENE[o.scene] ?? o.scene)}`}</b>${k === 0 ? '' : esc(o.why)}</div></div>`).join('')}</div>`
+      : `<div class="one">${thumb(s.still, s.erro, `Plano ${s.n}`)}</div>`)
+    + `<textarea placeholder="O que mudar neste momento? (deixe em branco se está bom)"></textarea>`
+    + `<label class="sempre"><input type="checkbox"> Sempre assim nos meus vídeos (vira regra)</label>`;
+  el.querySelectorAll('.opt').forEach((o) => { o.onclick = (ev) => { if (ev.target.tagName === 'IMG' && ev.detail === 2) return; el.querySelectorAll('.opt').forEach((x) => x.classList.remove('on')); o.classList.add('on'); const k = +o.dataset.k; state.escolhas[i] = k === 0 ? null : k - 1; summary(); }; });
+  el.querySelectorAll('img').forEach((img) => { img.ondblclick = () => zoom(img.src); if (!s.options.length) img.onclick = () => zoom(img.src); });
+  el.querySelector('.head').onclick = () => { if (D.plate) { video.currentTime = t0 + s.start / D.fps; video.play(); } };
+  const ta = el.querySelector('textarea'), cb = el.querySelector('input[type=checkbox]');
+  const save = () => { state.ajustes[i] = { texto: ta.value, sempre: cb.checked }; summary(); };
+  ta.oninput = save; cb.onchange = save;
+  shots.appendChild(el);
+});
+function zoom(src) { const z = document.createElement('div'); z.className = 'zoom'; z.innerHTML = `<img src="${src}">`; z.onclick = () => z.remove(); document.body.appendChild(z); }
+
+// ── summary and sending ──
+function summary() {
+  const n = Object.values(state.escolhas).filter((v) => v != null).length;
+  const a = Object.values(state.ajustes).filter((v) => v.texto.trim()).length + ($('#notas').value.trim() ? 1 : 0);
+  const parts = [];
+  if (n) parts.push(`${n} opç${n > 1 ? 'ões' : 'ão'} escolhida${n > 1 ? 's' : ''}`);
+  if (a) parts.push(`${a} ajuste${a > 1 ? 's' : ''}`);
+  if (state.cortes.length) parts.push(`${state.cortes.length} corte${state.cortes.length > 1 ? 's' : ''}`);
+  $('#sum').textContent = parts.length ? parts.join(' · ') : 'Nada marcado ainda: se está tudo bom, é só aprovar.';
+}
+$('#notas').oninput = summary;
+summary();
+const send = async (status) => {
+  const ajustes = Object.entries(state.ajustes).filter(([, v]) => v.texto.trim()).map(([k, v]) => ({ shot: +k, texto: v.texto, sempre: v.sempre }));
+  if ($('#notas').value.trim()) ajustes.push({ shot: null, texto: $('#notas').value, sempre: $('#notasSempre').checked });
+  const escolhas = Object.entries(state.escolhas).map(([k, v]) => ({ shot: +k, option: v }));
+  $('#aprovar').disabled = $('#mudar').disabled = true;
+  await fetch('/decidir', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ status, escolhas, ajustes, cortes: state.cortes, notas: '' }) });
+  document.body.innerHTML = `<div class="done"><h1>${status === 'aprovado' ? 'Aprovado!' : 'Pedido enviado.'}</h1><p>${status === 'aprovado' ? 'O Claude vai renderizar o vídeo agora.' : 'O Claude vai ajustar o plano e abrir um storyboard novo.'} Pode fechar esta aba e voltar para a conversa.</p></div>`;
+};
+$('#aprovar').onclick = () => send('aprovado');
+$('#mudar').onclick = () => { const a = Object.values(state.ajustes).some((v) => v.texto.trim()) || $('#notas').value.trim() || state.cortes.length; if (!a && !confirm('Você não escreveu nenhuma mudança. Enviar mesmo assim?')) return; send('mudancas'); };
+</script>
+</body>
+</html>

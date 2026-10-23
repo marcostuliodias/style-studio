@@ -16,6 +16,7 @@ types are in `src/reel/plan.ts`.
 | `audio` | The voice: a file in `public/` lined up with the edit, played from `from`. |
 | `captions` | `[{ from, to, text }]` on the reel's timeline. |
 | `shots` | `[{ scene, frames, in?, beat?, props?, note? }]`, in order. `beat` is the kind of beat the shot belongs to (`hook`, `payoff`, `item`, `number`, `point`, `proof`, `end`), on every shot of the beat, so check-plan can hold it to Glass's beats table; `note` says what the shot is for. Neither is rendered. |
+| `shots[].options` | `[{ scene, props, in?, why }]` (optional): alternatives for that shot, each a whole shot of the same length, for the creator to pick on the storyboard (`scripts/storyboard.mjs`). `why` is one line for the creator. The storyboard writes the pick into the shot and drops the options. |
 
 ## Timing
 

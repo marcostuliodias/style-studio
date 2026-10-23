@@ -17,6 +17,11 @@ public/footage/<video>/plate.mp4` writes `plate.json` beside it (a time for ever
 `.whisper-python` at this root (the installer's faster-whisper environment) or any Python with faster-whisper; without
 either, `pip install -U openai-whisper` and `whisper plate.mp4 --model small --word_timestamps True --output_format json`.
 
+Between the plan and the render, the skill opens the storyboard (`node scripts/storyboard.mjs plans/<video>.json`): a
+local page where the creator approves the plan, picks between the options a shot offers, marks cuts and says what to
+change. Wait for the creator there; never approve in their place. What they mark "always" lands in `plans/regras.json`,
+and every skill reads that file before planning.
+
 Run every command from this folder. The cut video goes in `public/footage/<video>/plate.mp4` (the skill's commands use
 that name) and plans in `plans/`; both stay out of git. Renders land in `out/`. The board (`npm run studio`, board
 stills) and the skills' example plans play demo footage that isn't in this folder: any landscape talking-head clip at

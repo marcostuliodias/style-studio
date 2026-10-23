@@ -121,7 +121,8 @@ Extraia o zip e dê dois cliques em INSTALAR-MAC.command (Mac) ou INSTALAR.bat (
 1. Feche o Claude por completo (Mac: Command+Q · Windows: ícone perto do relógio › Sair) e abra de novo.
 2. Na aba Code, escolha a pasta style-studio (fica na sua pasta de usuário).
 3. Coloque o vídeo cortado em public/footage/<nome>/plate.mp4 e peça: "Edite public/footage/<nome>/plate.mp4 em ${pack.name}. Se não houver marcações de tempo por palavra, faça com scripts/transcrever.py."
-4. O Claude lê skills/${pack.id}/SKILL.md, monta o plano, checa, mostra stills para você revisar e renderiza em out/reels/<nome>.mp4.
+4. O Claude lê skills/${pack.id}/SKILL.md, monta o plano, checa e abre o storyboard no seu navegador: você assiste o corte, escolhe entre as opções, marca erros de fala e diz o que mudar (só neste vídeo, ou sempre). O que você marca "sempre" vira regra para os próximos vídeos.
+5. Depois que você aprova, ele renderiza em out/reels/<nome>.mp4.
 
 Quer outro estilo? Crie no Style Studio, baixe o zip novo e repita a mensagem de instalação: ele só adiciona o estilo.
 `;

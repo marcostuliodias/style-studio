@@ -37,6 +37,9 @@ Run every command from the engine's root folder (the one with `package.json` and
 
 ## How you work
 
+0. **Read the creator's rules.** `plans/regras.json`, when it exists, holds what this creator has asked for
+   "always" on earlier storyboards (`regras[].texto`, with the video and shot it came from). Follow each one as if
+   it were written in this file; where one contradicts Terminal's rules, the creator wins, and say so in the plan's notes.
 1. **Find the beats.** Read the transcript into beats, one point each, and name each one's kind: a hook, a payoff,
    an item, a number, a point, a proof or the end ([Terminal's beats](#the-beats), below).
 2. **Pick the hero colour** (below).
@@ -45,6 +48,10 @@ Run every command from the engine's root folder (the one with `package.json` and
    frame `from + n`. Write the plan to `plans/<video>.json` (make the folder if it isn't there; it stays out of
    git). Scenes and their props: [references/scenes.md](references/scenes.md). The plan format:
    [references/plan.md](references/plan.md). A whole video in this style: [example-plan.json](example-plan.json).
+   Where you hesitate between two scenes for a beat, plan one and offer the other as `options` on that shot
+   (`[{ scene, props, in?, why }]`, each a whole shot of the same length, `why` one line in the creator's language):
+   the storyboard (step 7) shows them side by side and the creator picks. Two or three shots with options a video,
+   not every shot.
 4. **Write the captions** from the word timings (below).
 5. **Check the plan**: `node scripts/check-plan.mjs plans/<video>.json`. Fix every error; weigh every warning.
 6. **Render stills and look at every one**: `node scripts/render-reel.mjs plans/<video>.json --stills auto` writes a
@@ -65,7 +72,22 @@ Run every command from the engine's root folder (the one with `package.json` and
    - Each still makes its beat's point on its own.
 
    Fix the plan and render the stills again until every one reads.
-7. **Render the video**: `node scripts/render-reel.mjs plans/<video>.json` writes `out/reels/<video>.mp4`.
+7. **Storyboard: the creator approves before the render**: `node scripts/storyboard.mjs plans/<video>.json`
+   renders a still per shot (and per option), opens a page in the creator's browser and waits. There the creator
+   watches the cut with the shots marked on it, picks between the options, marks speech errors and breaths to cut,
+   writes what to change (for this video, or always) and approves or asks for changes. Tell the creator the page is
+   open and wait for the command to finish; never approve for them. When it ends:
+   - It has already written the chosen options into the plan (the plan as it was: `plans/<video>.antes.json`) and
+     the "always" notes into `plans/regras.json`; everything the creator said is in `plans/<video>.storyboard.json`
+     and in the command's output.
+   - **Cuts** (`cortes`, in seconds of the edit in `public/footage`, not the reel): remove those ranges from the
+     edit with ffmpeg (keep the original beside it), make the word timings again, shift `from`, the captions and the
+     shots, and run the storyboard again so the creator sees the cut.
+   - **Adjustments** (`ajustes`): change the plan accordingly, check it, render the stills again. A note marked always
+     is now a rule: follow it in this plan too.
+   - Exit code 0 is approved: apply any adjustments and render. Exit code 2 is changes asked: fix the plan and run the
+     storyboard again until the creator approves.
+8. **Render the video**: `node scripts/render-reel.mjs plans/<video>.json` writes `out/reels/<video>.mp4`.
 
 ## Terminal's rules
 

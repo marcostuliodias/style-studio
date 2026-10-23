@@ -9,6 +9,7 @@
 // --out <folder or .mp4> writes somewhere else. The engine refuses a plan it can't render, by name, before any frame.
 import fs from 'node:fs';
 import path from 'node:path';
+import { landed } from './lib/plan-frames.mjs';
 import { arg, errorText, renderer, ROOT, withRemotion } from './lib/remotion.mjs';
 
 const planPath = process.argv[2];
@@ -23,21 +24,6 @@ const pack = JSON.parse(fs.readFileSync(packFile ? path.resolve(packFile) : path
 const name = path.basename(planPath, '.json');
 const stills = arg('stills', null);
 const out = path.resolve(ROOT, arg('out', stills ? `out/reels/${name}` : `out/reels/${name}.mp4`));
-
-/**
- * The frame inside a shot where it has landed: 70% through, or for a scene that lands on a word (a slam, the last
- * sticker, word-pop's key word, a doodle's arrow) just after that, so the still shows the hit.
- */
-const landed = (s) => {
-  const p = s.props ?? {};
-  const late = {
-    slam: (p.at ?? 10) + 16,
-    sticker: Math.max(0, ...(p.stickers ?? []).map((x) => x.at)) + 16,
-    'word-pop': Math.max(0, ...(p.groups ?? []).flatMap((g) => g.words.map((w) => w.at))) + 12,
-    doodle: (p.from ?? 4) + 26,
-  }[s.scene];
-  return Math.max(0, Math.min(s.frames - 2, late ?? Math.round(s.frames * 0.7)));
-};
 
 /** Reel frames to look at: each shot once it has landed, and the middle of each join that isn't a cut. */
 const autoFrames = () => {
